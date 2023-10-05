@@ -9,16 +9,22 @@ declare var canvasJs;
   shadow: true,
 })
 export class ChartPage {
+  refTest: HTMLDivElement;
   render() {
-    this.createChart();
     return (
       <Host>
         <h1>Dashboard UI</h1>
+        <div ref={ref => (this.refTest = ref)}></div>
       </Host>
     );
   }
 
-  createChart() {
+  componentDidLoad(){
+    this.createChart('steelblue');
+    this.createChart('red');
+  }
+
+  createChart(color: string) {
     let jsonData = {
       data: [
         { bin: '0.0-0.1', frequency: 0 },
@@ -54,11 +60,11 @@ export class ChartPage {
 
     // Create the SVG container.
     let svg = d3
-      .select('body')
+      .select(this.refTest)
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
-      .attr('fill', 'steelblue')
+      .attr('fill', color)
       .append('g')
       .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
