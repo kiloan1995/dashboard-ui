@@ -1,5 +1,5 @@
-import { Component, Element, Host, h } from '@stencil/core';
-import { Router } from '@vaadin/router';
+import { Component, Host, h } from '@stencil/core';
+// import { Router } from '@vaadin/router';
 
 @Component({
   tag: 'app-root',
@@ -7,18 +7,18 @@ import { Router } from '@vaadin/router';
   shadow: true,
 })
 export class AppRoot {
-  @Element() el;
-  mainRef: HTMLDivElement;
+  // mainRef: HTMLDivElement;
 
   componentDidLoad() {
-    const router: Router = new Router(this.mainRef);
-    router.setRoutes([{ path: '/', component: 'chart-page' }]);
+    // const router: Router = new Router(this.mainRef);
+    // router.setRoutes([{ path: '/', component: 'chart-page' }]);
   }
 
   render() {
     return (
       <Host>
-        <div ref={ref => (this.mainRef = ref)}></div>
+        <chart-page></chart-page>
+        {/* <div ref={ref => (this.mainRef = ref)}></div> */}
       </Host>
     );
   }
