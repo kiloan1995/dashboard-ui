@@ -1,0 +1,7 @@
+:host {
+  --fill-color: green;
+
+  svg {
+    fill: var(--fill-color);
+  }
+}

@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AppRoot {
     }
+    interface ChartHistogram {
+    }
     interface ChartPage {
     }
 }
@@ -18,6 +20,12 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLChartHistogramElement extends Components.ChartHistogram, HTMLStencilElement {
+    }
+    var HTMLChartHistogramElement: {
+        prototype: HTMLChartHistogramElement;
+        new (): HTMLChartHistogramElement;
+    };
     interface HTMLChartPageElement extends Components.ChartPage, HTMLStencilElement {
     }
     var HTMLChartPageElement: {
@@ -26,16 +34,20 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
+        "chart-histogram": HTMLChartHistogramElement;
         "chart-page": HTMLChartPageElement;
     }
 }
 declare namespace LocalJSX {
     interface AppRoot {
     }
+    interface ChartHistogram {
+    }
     interface ChartPage {
     }
     interface IntrinsicElements {
         "app-root": AppRoot;
+        "chart-histogram": ChartHistogram;
         "chart-page": ChartPage;
     }
 }
@@ -44,6 +56,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "chart-histogram": LocalJSX.ChartHistogram & JSXBase.HTMLAttributes<HTMLChartHistogramElement>;
             "chart-page": LocalJSX.ChartPage & JSXBase.HTMLAttributes<HTMLChartPageElement>;
         }
     }
