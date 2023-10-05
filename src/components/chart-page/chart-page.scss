@@ -1,12 +1,6 @@
 :host {
   display: flex;
-  flex-direction: column;
-
-  .heading {
-    color: Red;
-  }
-  .chartContainer {
-    height: 300px;
-    width: 100%;
+  h1 {
+    color: red;
   }
 }

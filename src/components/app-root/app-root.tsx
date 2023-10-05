@@ -1,19 +1,24 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Element, Host, h } from '@stencil/core';
+import { Router } from '@vaadin/router';
 
 @Component({
   tag: 'app-root',
-  styleUrl: 'app-root.css',
-  shadow: false,
+  styleUrl: 'app-root.scss',
+  shadow: true,
 })
 export class AppRoot {
+  @Element() el;
+  mainRef: HTMLDivElement;
+
+  componentDidLoad() {
+    const router: Router = new Router(this.mainRef);
+    router.setRoutes([{ path: '/', component: 'chart-page' }]);
+  }
+
   render() {
     return (
-      <Host>        
-        <stencil-router>
-          <stencil-route-switch scrollTopOffset={0}>
-            <stencil-route url="/" component="chart-page" exact={true} />
-          </stencil-route-switch>
-        </stencil-router>
+      <Host>
+        <div ref={ref => (this.mainRef = ref)}></div>
       </Host>
     );
   }

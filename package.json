@@ -26,19 +26,17 @@
     "generate": "stencil generate"
   },
   "dependencies": {
-    "@canvasjs/charts": "^3.7.22",
-    "@stencil/core": "^2.13.0",
-    "@stencil/sass": "^3.0.6",
+    "@stencil/core": "^4.0.0",
+    "@vaadin/router": "^1.7.5",
     "sass": "^1.68.0"
   },
   "devDependencies": {
-    "@stencil-community/router": "^1.0.2",
+    "@stencil/sass": "^3.0.6",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.11",
     "jest": "^27.5.1",
     "jest-cli": "^27.5.1",
-    "puppeteer": "21.1.1",
-    "typescript": "4.8.4"
+    "puppeteer": "21.1.1"
   },
   "license": "MIT"
 }
