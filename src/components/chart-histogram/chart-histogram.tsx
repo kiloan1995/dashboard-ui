@@ -33,16 +33,18 @@ export class ChartHistogram {
       ],
     };
 
+    const desiredHeight: number = 448;
+
     let margin = { top: 10, right: 30, bottom: 30, left: 30 };
-    let width = 460 - margin.left - margin.right;
-    let height = 300 - margin.top - margin.bottom;
+    let height = desiredHeight - margin.top - margin.bottom;
+    let width = desiredHeight * 1.5 - margin.left - margin.right;
     const barCount = jsonData.data.length;
     const barGap = 4;
     // Declare the x (horizontal position) scale.
     let x = d3.scaleLinear().rangeRound([0, width]);
 
     // Declare the y (vertical position) scale.
-    
+
     let y = d3
       .scaleLinear()
       .domain([

@@ -35,13 +35,15 @@ export class ChartHistogram {
       totalValue += entry.value;
     });
 
-    const diagramInnerRadius: number = 128;
-    const diagramOuterRadius: number = 192;
-    const padding: number = 32;
+    const desiredHeight: number = 448;
+
+    const padding: number = desiredHeight / 14;
+    const diagramOuterRadius: number = (desiredHeight - padding * 2) / 2;
+    const diagramInnerRadius: number = diagramOuterRadius / 1.5;
     const height: number = diagramOuterRadius * 2 + padding * 2;
-    const circleRadius: number = 10;
-    const textPadding: number = 16;
-    const labelWidth: number = 192;
+    const circleRadius: number = 10 * (padding / 32);
+    const textPadding: number = padding / 2;
+    const labelWidth: number = diagramOuterRadius;
     const width: number = diagramOuterRadius * 2 + padding * 2 + labelWidth + padding;
 
     // const colors = d3.scaleOrdinal(d3.schemeDark2);
