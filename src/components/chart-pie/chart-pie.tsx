@@ -82,6 +82,19 @@ export class ChartHistogram {
           .text(round((d.data.value / totalValue) * 100) + '%');
       });
 
+    const title = svg
+      .append('g')
+      .attr('transform', 'translate(' + padding / 2 + ',' + padding / 2 + ')')
+      .selectAll('.title')
+      .data(data);
+
+    const titleText = title
+      .enter()
+      .append('g') //append g element to avoid selecting existing g element.
+      .classed('title', true);
+
+    titleText.append('text').classed('titleText', true).text(this.textTotal);
+
     const totals = svg
       .append('g')
       .attr('transform', 'translate(' + (padding + diagramOuterRadius) + ',' + (padding + diagramOuterRadius) + ')')
@@ -122,7 +135,7 @@ export class ChartHistogram {
       });
     legend
       .append('text')
-      .classed('label', true)
+      .classed('labelType', true)
       .text(function (d) {
         return d.data.type;
       })

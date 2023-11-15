@@ -1,35 +1,47 @@
+@use '../../global/variables.scss';
+
 :host {
   svg {
-    border: 1px solid #c7c9ca;
+    border: 1px solid variables.$gray-light1;
   }
+}
+
+.titleText {
+  font-size: 18px;
+  font-weight: 400;
+  font-family: variables.$font-family;
+  fill: variables.$gray-dark2;
+  dominant-baseline: hanging; // vertical alignment
 }
 
 .inside {
   font-size: 12px;
   font-weight: bold;
-  font-family: 'Segoe UI';
-  fill: #565656;
+  font-family: variables.$font-family;
+  fill: variables.$gray-dark2;
 }
 
-.label {
+.labelType {
   font-size: 12px;
   font-weight: normal;
-  font-family: 'Segoe UI';
-  fill: #565656;
+  font-family: variables.$font-family;
+  fill: variables.$gray-dark2;
+  dominant-baseline: central; // vertical alignment
 }
 
 .labelValues {
   font-size: 12px;
   font-weight: bold;
-  font-family: 'Segoe UI';
-  fill: #3a3a3a;
+  font-family: variables.$font-family;
+  fill: variables.$gray-dark1;
   text-anchor: end;
+  dominant-baseline: central; // vertical alignment
 }
 
 .totalValue {
   font-size: 32px;
   font-weight: bold;
-  font-family: 'Segoe UI';
+  font-family: variables.$font-family;
   fill: #3a3a3a;
   text-anchor: middle;
 }
@@ -37,7 +49,7 @@
 .totalText {
   font-size: 18px;
   font-weight: normal;
-  font-family: 'Segoe UI';
-  fill: #c7c9ca;
+  font-family: variables.$font-family;
+  fill: variables.$gray-light1;
   text-anchor: middle;
 }
