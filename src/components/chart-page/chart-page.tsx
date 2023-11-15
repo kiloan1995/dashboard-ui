@@ -10,6 +10,7 @@ export class ChartPage {
     return (
       <Host>
         <chart-histogram />
+        <chart-pie />
       </Host>
     );
   }

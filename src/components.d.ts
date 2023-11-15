@@ -12,6 +12,8 @@ export namespace Components {
     }
     interface ChartPage {
     }
+    interface ChartPie {
+    }
 }
 declare global {
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
@@ -32,10 +34,17 @@ declare global {
         prototype: HTMLChartPageElement;
         new (): HTMLChartPageElement;
     };
+    interface HTMLChartPieElement extends Components.ChartPie, HTMLStencilElement {
+    }
+    var HTMLChartPieElement: {
+        prototype: HTMLChartPieElement;
+        new (): HTMLChartPieElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "chart-histogram": HTMLChartHistogramElement;
         "chart-page": HTMLChartPageElement;
+        "chart-pie": HTMLChartPieElement;
     }
 }
 declare namespace LocalJSX {
@@ -45,10 +54,13 @@ declare namespace LocalJSX {
     }
     interface ChartPage {
     }
+    interface ChartPie {
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "chart-histogram": ChartHistogram;
         "chart-page": ChartPage;
+        "chart-pie": ChartPie;
     }
 }
 export { LocalJSX as JSX };
@@ -58,6 +70,7 @@ declare module "@stencil/core" {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "chart-histogram": LocalJSX.ChartHistogram & JSXBase.HTMLAttributes<HTMLChartHistogramElement>;
             "chart-page": LocalJSX.ChartPage & JSXBase.HTMLAttributes<HTMLChartPageElement>;
+            "chart-pie": LocalJSX.ChartPie & JSXBase.HTMLAttributes<HTMLChartPieElement>;
         }
     }
 }
