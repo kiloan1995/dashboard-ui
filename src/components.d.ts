@@ -13,6 +13,7 @@ export namespace Components {
     interface ChartPage {
     }
     interface ChartPie {
+        "textTotal": string;
     }
 }
 declare global {
@@ -55,6 +56,7 @@ declare namespace LocalJSX {
     interface ChartPage {
     }
     interface ChartPie {
+        "textTotal"?: string;
     }
     interface IntrinsicElements {
         "app-root": AppRoot;

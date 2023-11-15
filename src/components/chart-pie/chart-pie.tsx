@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -8,6 +8,8 @@ import * as d3 from 'd3';
 })
 export class ChartHistogram {
   svgContainer: HTMLDivElement;
+
+  @Prop() textTotal: string = 'Applications';
 
   render() {
     return (
@@ -33,12 +35,18 @@ export class ChartHistogram {
       totalValue += entry.value;
     });
 
-    const width: number = 800;
-    const height: number = width;
-    const diagramInnerRadius: number = 64;
+    const diagramInnerRadius: number = 128;
     const diagramOuterRadius: number = 192;
+    const padding: number = 32;
+    const height: number = diagramOuterRadius * 2 + padding * 2;
+    const circleRadius: number = 10;
+    const textPadding: number = 16;
+    const labelWidth: number = 192;
+    const width: number = diagramOuterRadius * 2 + padding * 2 + labelWidth + padding;
+
     // const colors = d3.scaleOrdinal(d3.schemeDark2);
-    const colors = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, jsonData.length + 1));
+    const colors = d3.scaleOrdinal(d3.schemePastel1);
+    // const colors = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, jsonData.length + 1));
     const data = d3
       .pie()
       .sort(null)
@@ -46,9 +54,13 @@ export class ChartHistogram {
         return d.value;
       })(jsonData);
 
-    const svg = d3.select(this.svgContainer).append('svg').style('background', 'pink').attr('width', width).attr('height', height);
-    const segments = d3.arc().innerRadius(diagramInnerRadius).outerRadius(diagramOuterRadius).padAngle(0.05).padRadius(50);
-    const sections = svg.append('g').attr('transform', 'translate(250, 250)').selectAll('path').data(data);
+    const svg = d3.select(this.svgContainer).append('svg').style('background', 'white').attr('width', width).attr('height', height);
+    const segments = d3.arc().innerRadius(diagramInnerRadius).outerRadius(diagramOuterRadius).padAngle(0.1).padRadius(16);
+    const sections = svg
+      .append('g')
+      .attr('transform', 'translate(' + (diagramOuterRadius + padding) + ',' + (diagramOuterRadius + padding) + ')')
+      .selectAll('path')
+      .data(data);
     sections
       .enter()
       .append('path')
@@ -69,19 +81,42 @@ export class ChartHistogram {
           .attr('y', center[1])
           .text(round((d.data.value / totalValue) * 100) + '%');
       });
-    const legends = svg.append('g').attr('transform', 'translate(500, 300)').selectAll('.legends').data(data);
+
+    const totals = svg
+      .append('g')
+      .attr('transform', 'translate(' + (padding + diagramOuterRadius) + ',' + (padding + diagramOuterRadius) + ')')
+      .selectAll('.total')
+      .data(data);
+
+    const total = totals
+      .enter()
+      .append('g') //append g element to avoid selecting existing g element.
+      .classed('totals', true);
+
+    total.append('text').classed('totalValue', true).text(totalValue);
+    total.append('text').classed('totalText', true).text(this.textTotal).attr('y', 20);
+
+    const legends = svg
+      .append('g')
+      .attr('transform', 'translate(' + (padding * 2 + diagramOuterRadius * 2) + ',' + padding + ')')
+      .selectAll('.legends')
+      .data(data);
+
+    const elementHeight = (diagramOuterRadius * 2) / jsonData.length;
+
     const legend = legends
       .enter()
       .append('g') //append g element to avoid selecting existing g element.
       .classed('legends', true)
       .attr('transform', function (d, i) {
-        return 'translate(0,' + i * 30 + ')';
+        return 'translate(0,' + i * elementHeight + ')';
       });
+
     legend
       .append('circle')
-      .attr('cx', 0)
-      .attr('cy', 0)
-      .attr('r', 10)
+      .attr('cx', circleRadius)
+      .attr('cy', circleRadius * 2)
+      .attr('r', circleRadius)
       .attr('fill', function (d) {
         return colors(d.data.value);
       });
@@ -94,9 +129,8 @@ export class ChartHistogram {
       .attr('fill', function (d) {
         return colors(d.data.value);
       })
-      .attr('x', 20)
-      .attr('y', 0)
-      .attr('height', 40);
+      .attr('x', circleRadius * 2 + textPadding)
+      .attr('y', circleRadius * 2);
 
     legend
       .append('text')
@@ -104,8 +138,8 @@ export class ChartHistogram {
       .text(function (d) {
         return d.data.value;
       })
-      .attr('x', 128)
-      .attr('y', 0);
+      .attr('x', labelWidth)
+      .attr('y', 20);
   }
 }
 

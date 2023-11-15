@@ -20,16 +20,16 @@ export class ChartHistogram {
   componentDidLoad() {
     let jsonData = {
       data: [
-        { bin: '0.0-0.1', frequency: 0 },
-        { bin: '0.1-0.2', frequency: 53899 },
-        { bin: '0.2-0.3', frequency: 4986 },
-        { bin: '0.3-0.4', frequency: 728 },
-        { bin: '0.4-0.5', frequency: 0 },
-        { bin: '0.5-0.6', frequency: 0 },
-        { bin: '0.6-0.7', frequency: 0 },
-        { bin: '0.7-0.8', frequency: 0 },
-        { bin: '0.8-0.9', frequency: 0 },
-        { bin: '0.9-1.0', frequency: 0 },
+        { bin: '0.0-0.1', value: 0 },
+        { bin: '0.1-0.2', value: 53899 },
+        { bin: '0.2-0.3', value: 4986 },
+        { bin: '0.3-0.4', value: 728 },
+        { bin: '0.4-0.5', value: 0 },
+        { bin: '0.5-0.6', value: 0 },
+        { bin: '0.6-0.7', value: 0 },
+        { bin: '0.7-0.8', value: 0 },
+        { bin: '0.8-0.9', value: 0 },
+        { bin: '0.9-1.0', value: 0 },
       ],
     };
 
@@ -48,7 +48,7 @@ export class ChartHistogram {
       .domain([
         0,
         d3.max(jsonData['data'], function (d) {
-          return d.frequency;
+          return d.value;
         }),
       ])
       .range([height, 0]);
@@ -69,7 +69,7 @@ export class ChartHistogram {
       .append('g')
       .attr('class', 'bar')
       .attr('transform', function (d, i) {
-        return 'translate(' + x(i / barCount) + ',' + y(d.frequency) + ')';
+        return 'translate(' + x(i / barCount) + ',' + y(d.value) + ')';
       });
 
     bar
@@ -77,7 +77,7 @@ export class ChartHistogram {
       .attr('x', 1)
       .attr('width', width / barCount - barGap)
       .attr('height', function (d) {
-        return height - y(d.frequency);
+        return height - y(d.value);
       });
 
     svg

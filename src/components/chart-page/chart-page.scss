@@ -1,5 +1,7 @@
 :host {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 30px;
   h1 {
     color: red;
   }

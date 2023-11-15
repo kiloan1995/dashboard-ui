@@ -1,3 +1,9 @@
+:host {
+  svg {
+    border: 1px solid #c7c9ca;
+  }
+}
+
 .inside {
   font-size: 12px;
   font-weight: bold;
@@ -6,7 +12,6 @@
 }
 
 .label {
-  line-height: 20px;
   font-size: 12px;
   font-weight: normal;
   font-family: 'Segoe UI';
@@ -14,9 +19,25 @@
 }
 
 .labelValues {
-  line-height: 20px;
   font-size: 12px;
   font-weight: bold;
   font-family: 'Segoe UI';
   fill: #3a3a3a;
+  text-anchor: end;
+}
+
+.totalValue {
+  font-size: 32px;
+  font-weight: bold;
+  font-family: 'Segoe UI';
+  fill: #3a3a3a;
+  text-anchor: middle;
+}
+
+.totalText {
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Segoe UI';
+  fill: #c7c9ca;
+  text-anchor: middle;
 }
