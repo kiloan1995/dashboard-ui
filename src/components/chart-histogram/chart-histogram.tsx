@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -8,6 +8,8 @@ import * as d3 from 'd3';
 })
 export class ChartHistogram {
   svgContainer: HTMLDivElement;
+  @Prop() yAxisLabel: string = 'Number of applications';
+  @Prop() xAxisLabel: string = 'Month';
 
   render() {
     return (
@@ -18,30 +20,30 @@ export class ChartHistogram {
   }
 
   componentDidLoad() {
-    let jsonData = {
-      data: [
-        { bin: '0.0-0.1', value: 0 },
-        { bin: '0.1-0.2', value: 53899 },
-        { bin: '0.2-0.3', value: 4986 },
-        { bin: '0.3-0.4', value: 728 },
-        { bin: '0.4-0.5', value: 0 },
-        { bin: '0.5-0.6', value: 0 },
-        { bin: '0.6-0.7', value: 0 },
-        { bin: '0.7-0.8', value: 0 },
-        { bin: '0.8-0.9', value: 0 },
-        { bin: '0.9-1.0', value: 0 },
-      ],
-    };
+    let jsonData = [
+      { type: 'January', value: 250 },
+      { type: 'February', value: 53899 },
+      { type: 'March', value: 4986 },
+      { type: 'April', value: 728 },
+      { type: 'May', value: 250 },
+      { type: 'June', value: 53899 },
+      { type: 'July', value: 0 },
+      { type: 'August', value: 3000 },
+      { type: 'September', value: 250 },
+      { type: 'October', value: 10 },
+    ];
 
     const desiredHeight: number = 448;
 
-    let margin = { top: 10, right: 30, bottom: 30, left: 30 };
-    let height = desiredHeight - margin.top - margin.bottom;
-    let width = desiredHeight * 1.5 - margin.left - margin.right;
-    const barCount = jsonData.data.length;
+    const padding: number = desiredHeight / 14;
+    let height = desiredHeight - padding * 2;
+    let width = desiredHeight * 1.5 - padding * 2;
+    const barCount = jsonData.length;
     const barGap = 4;
     // Declare the x (horizontal position) scale.
     let x = d3.scaleLinear().rangeRound([0, width]);
+
+    const colors = d3.scaleOrdinal(d3.schemePastel1);
 
     // Declare the y (vertical position) scale.
 
@@ -49,7 +51,7 @@ export class ChartHistogram {
       .scaleLinear()
       .domain([
         0,
-        d3.max(jsonData['data'], function (d) {
+        d3.max(jsonData, function (d) {
           return d.value;
         }),
       ])
@@ -59,14 +61,14 @@ export class ChartHistogram {
     let svg = d3
       .select(this.svgContainer)
       .append('svg')
-      .attr('width', width + margin.left + margin.right)
-      .attr('height', height + margin.top + margin.bottom)
+      .attr('width', width + padding + padding)
+      .attr('height', height + padding + padding)
       .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+      .attr('transform', 'translate(' + padding + ',' + padding + ')');
 
-    let bar = svg
+    let horizontalbar = svg
       .selectAll('.bar')
-      .data(jsonData['data'])
+      .data(jsonData)
       .enter()
       .append('g')
       .attr('class', 'bar')
@@ -74,25 +76,36 @@ export class ChartHistogram {
         return 'translate(' + x(i / barCount) + ',' + y(d.value) + ')';
       });
 
-    bar
+    horizontalbar
       .append('rect')
       .attr('x', 1)
       .attr('width', width / barCount - barGap)
       .attr('height', function (d) {
         return height - y(d.value);
+      })
+      .attr('fill', function (d) {
+        return colors(d.value);
       });
 
     svg
       .append('g')
-      .attr('class', 'axis axis--x')
       .attr('transform', 'translate(0,' + height + ')')
-      .call(d3.axisBottom(x));
+      .call(
+        d3.axisBottom(x).tickFormat(function (d, i) {
+          return jsonData[i].type;
+        }),
+      )
+      .selectAll('text')
+      .style('text-anchor', 'end')
+      .attr('dx', '-.8em')
+      .attr('dy', '.15em')
+      .attr('transform', 'rotate(-65)');
 
     svg
       .append('g')
-      .attr('transform', `translate(${margin.left},0)`)
+      .attr('transform', `translate(${padding},0)`)
       .call(d3.axisLeft(y).ticks(height / 40))
       .call(g => g.select('.domain').remove())
-      .call(g => g.append('text').attr('x', -margin.left).attr('y', 10).attr('fill', 'currentColor').attr('text-anchor', 'start').text('↑ Frequency (no. of counties)'));
+      .call(g => g.append('text').classed('y-axis-label', true).attr('x', -padding).attr('y', 10).text(this.yAxisLabel));
   }
 }

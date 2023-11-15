@@ -9,6 +9,11 @@ export namespace Components {
     interface AppRoot {
     }
     interface ChartHistogram {
+        "xAxisLabel": string;
+        "yAxisLabel": string;
+    }
+    interface ChartIndex {
+        "textTotal": string;
     }
     interface ChartPage {
     }
@@ -29,6 +34,12 @@ declare global {
         prototype: HTMLChartHistogramElement;
         new (): HTMLChartHistogramElement;
     };
+    interface HTMLChartIndexElement extends Components.ChartIndex, HTMLStencilElement {
+    }
+    var HTMLChartIndexElement: {
+        prototype: HTMLChartIndexElement;
+        new (): HTMLChartIndexElement;
+    };
     interface HTMLChartPageElement extends Components.ChartPage, HTMLStencilElement {
     }
     var HTMLChartPageElement: {
@@ -44,6 +55,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "chart-histogram": HTMLChartHistogramElement;
+        "chart-index": HTMLChartIndexElement;
         "chart-page": HTMLChartPageElement;
         "chart-pie": HTMLChartPieElement;
     }
@@ -52,6 +64,11 @@ declare namespace LocalJSX {
     interface AppRoot {
     }
     interface ChartHistogram {
+        "xAxisLabel"?: string;
+        "yAxisLabel"?: string;
+    }
+    interface ChartIndex {
+        "textTotal"?: string;
     }
     interface ChartPage {
     }
@@ -61,6 +78,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "app-root": AppRoot;
         "chart-histogram": ChartHistogram;
+        "chart-index": ChartIndex;
         "chart-page": ChartPage;
         "chart-pie": ChartPie;
     }
@@ -71,6 +89,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "chart-histogram": LocalJSX.ChartHistogram & JSXBase.HTMLAttributes<HTMLChartHistogramElement>;
+            "chart-index": LocalJSX.ChartIndex & JSXBase.HTMLAttributes<HTMLChartIndexElement>;
             "chart-page": LocalJSX.ChartPage & JSXBase.HTMLAttributes<HTMLChartPageElement>;
             "chart-pie": LocalJSX.ChartPie & JSXBase.HTMLAttributes<HTMLChartPieElement>;
         }
