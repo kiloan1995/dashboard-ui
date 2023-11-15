@@ -8,7 +8,7 @@ export class ChartPage {
   render() {
     return (
       <Host>
-        <chart-histogram />
+        {/* <chart-histogram /> */}
         <chart-pie />
         <chart-index />
       </Host>
