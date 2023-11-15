@@ -1,15 +1,7 @@
 import { Component, Host, Prop, h } from '@stencil/core';
 import * as d3 from 'd3';
+import { IDataSetDate, IDataSetItemDate } from '../../global/DataSet';
 
-interface obj {
-  date: Date;
-  value: number;
-}
-
-interface test {
-  name: string;
-  data: obj[];
-}
 @Component({
   tag: 'chart-index',
   styleUrl: 'chart-index.scss',
@@ -29,7 +21,7 @@ export class ChartIndex {
   }
 
   componentDidLoad() {
-    const jsonData: test[] = [
+    const jsonData: IDataSetDate[] = [
       {
         name: 'store employee',
         data: [
@@ -76,9 +68,9 @@ export class ChartIndex {
       .attr('transform', 'translate(' + padding + ',' + padding + ')');
 
     // define Axis domains
-    jsonData.forEach((set: test) => {
-      x.domain(d3.extent(set.data, (item: obj) => item.date));
-      y.domain([0, d3.max(set.data, (item: obj) => item.value)]);
+    jsonData.forEach((set: IDataSetDate) => {
+      x.domain(d3.extent(set.data, (item: IDataSetItemDate) => item.date));
+      y.domain([0, d3.max(set.data, (item: IDataSetItemDate) => item.value)]);
     });
 
     // add x-axis
@@ -94,11 +86,11 @@ export class ChartIndex {
 
     let line = d3
       .line()
-      .x((item: obj) => x(item.date))
-      .y((item: obj) => y(item.value));
+      .x((item: IDataSetItemDate) => x(item.date))
+      .y((item: IDataSetItemDate) => y(item.value));
 
     const colors = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, jsonData.length + 1));
-    jsonData.forEach((set: test, i: number) => {
+    jsonData.forEach((set: IDataSetDate) => {
       svg.append('path').datum(set.data).attr('fill', 'none').attr('stroke', colors(set.name)).attr('stroke-width', 1).attr('d', line);
     });
   }
