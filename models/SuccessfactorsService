@@ -1,0 +1,49 @@
+import { IDashboardRequest, IDashboardResponse } from "./DashboardModels";
+import { IGetApplicationDataRequest, IGetApplicationDataReponse, IGetApplicationDataAggregatedReponse, IGetJobDataRequest, IGetJobDataResponse } from "./RequestObject";
+
+export class ISuccessFactorsService{
+
+    getApplicationData(request: IGetApplicationDataRequest): IGetApplicationDataReponse | undefined{
+        return undefined;
+    }
+
+    private aggregate(list: IGetApplicationDataReponse[]) :IGetApplicationDataAggregatedReponse | undefined{
+            return undefined;
+            }
+            
+            private egetApplicationsPerJob(request: IGetJobDataRequest) :IGetJobDataResponse | undefined{
+                let appIDs: string[] = [];
+                let data: IGetJobDataResponse = new IGetJobDataResponse();
+                data.applications = []
+                appIDs.forEach((ID) => data.applications.push( this.getApplicationData({applicationID:ID})));
+                data.aggregated = this.aggregate(data.applications);
+            return data;
+            }
+
+
+            getDashboardData(let request:IDashboardRequest):IDashboardResponse[] // includes previous months/days, however the filter is set
+            {
+                
+            }
+
+            getDashboardDetailedData(let request:IDashboardRequest):IDashboardResponse[] //includes all jobs in filter range
+            {
+                
+            }
+
+            getJobData(let request: any)
+            {
+
+            }
+
+            getJobDetailedData(let request: any) //includes an array of all applications at this job  in filter range
+            {
+
+            }
+
+            getApplicationData(let request:any)
+            {
+
+            }           
+
+}
