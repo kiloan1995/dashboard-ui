@@ -38,13 +38,13 @@ export class SuccessFactorsService {
     const details: any = {
       client_id: customer.clientID,
       user_id: customer.userID,
-      token_url: customer.APIUrl + 'oauth/token',
-      private_key: customer.APIKey,
+      token_url: customer.apiUrl + 'oauth/token',
+      private_key: customer.apiKey,
     };
 
     const requestString = this.generateEncodedFormString(details);
 
-    const url = `${this.customer.APIUrl}oauth/idp`;
+    const url = `${this.customer.apiUrl}oauth/idp`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -79,7 +79,7 @@ export class SuccessFactorsService {
 
       const requestString = this.generateEncodedFormString(details);
 
-      const url = `${this.customer.APIUrl}oauth/token`;
+      const url = `${this.customer.apiUrl}oauth/token`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -111,4 +111,18 @@ export class SuccessFactorsService {
   getJobDetailedData(
     request: any, //includes an array of all applications at this job  in filter range
   ) {}
+
+  async getStatusList() {
+    const url = `${this.customer.apiUrl}odata/v2/JobApplicationStatusLabel?$format=json`;
+
+    // this.logger.debug('sf getStatusList', url);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': await this.getAuthHeader(),
+        'Content-Type': 'application/json',
+      },
+    });
+    return response;
+  }
 }

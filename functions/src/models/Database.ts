@@ -21,9 +21,9 @@ export interface IDatabaseJobStruct {
 
 export interface ICustomer {
   id: string;
-  APIKey: string;
+  apiKey: string;
   clientID: string;
-  APIUrl: SVGStringList;
+  apiUrl: SVGStringList;
   companyID: string;
   userID: string;
   stateMapping: { key: string; value: IApplicationState };

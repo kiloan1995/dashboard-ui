@@ -25,13 +25,11 @@ import { SuccessFactorsService } from './models';
 export const onApplicationUpdated = onCall(async request => {
   let service = new CustomerService();
   let list = await service.getCustomerList();
-  list.forEach(customer =>{
-      let SFService = new SuccessFactorsService();
-    SFService
-    customer.
-  })
-  return list;
-  //   logger.info('Hello logs!', { structuredData: true });
-  //   data.send('Hello from Firebase!');
-  //   let json = data.json;
+  for (let index = 0; index < list.length; index++) {
+    const customer = list[index];
+    let SFService = new SuccessFactorsService(customer);
+    const list2 = await SFService.getStatusList();
+    return list2.json();
+  }
+  return undefined;
 });
