@@ -112,7 +112,10 @@ export class SuccessFactorsService {
   ) {}
 
   async getModifiedApplications(lastRunDate?: Date) {
-    let url = `${this.customer.apiUrl}odata/v2/JobApplication?$format=json&$expand=jobApplicationStatusAuditTrail,jobApplicationStatusAuditTrail/jobAppStatus`;
+    // schriftlich: über selects und expands schreiben, damit performance rausholen.
+    let expand = 'jobApplicationStatusAuditTrail,jobApplicationStatusAuditTrail/jobAppStatus,jobRequisition,jobRequisition/jobReqLocale';
+    let select = 'jobApplicationStatusAuditTrail,applicationId,jobReqId,jobRequisition/jobReqLocale/jobTitle,firstName,lastName';
+    let url = `${this.customer.apiUrl}odata/v2/JobApplication?$format=json&$expand=${expand}&$select=${select}`;
 
     if (lastRunDate) {
       const formattedDate = lastRunDate.toISOString();

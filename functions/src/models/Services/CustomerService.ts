@@ -15,5 +15,9 @@ export class CustomerService {
     }
     return customerList;
   }
-  //   async getCustomer(customerID: string): Promise<ICustomer> {
+
+  async getCustomer(customerName: string): Promise<Customer> {
+    const document = await admin.firestore().doc(customerName).get();
+    return document.data() as Customer;
+  }
 }

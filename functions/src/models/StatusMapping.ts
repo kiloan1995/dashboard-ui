@@ -21,6 +21,8 @@ export function mapStatus(sfStatus: string): ApplicationStatusType {
     case 'Phone_Interview':
     case 'Screening':
       return ApplicationStatusType.STATUS_INTERVIEW;
+    case 'Forwarded':
+      return ApplicationStatusType.STATUS_FORWARDED;
     case 'Auto Disqualified':
     case 'DataCompletion':
     case 'Declined DPCS':
@@ -43,7 +45,6 @@ export function mapStatus(sfStatus: string): ApplicationStatusType {
     case 'WithdrawnByCandidate2':
     case 'WithdrawnOnBehalfOfCandidate':
       return ApplicationStatusType.STATUS_WITHDRAWN;
-    case 'Forwarded':
     case 'Hired On Other Requisition':
     case 'Hired':
     case 'HiredAtSAP':

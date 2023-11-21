@@ -1,5 +1,6 @@
 import { onCall } from 'firebase-functions/v2/https';
 import * as admin from 'firebase-admin';
+import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 
 admin.initializeApp();
 
@@ -21,6 +22,7 @@ import { ApplicationStatus, Application, ApplicationStats, SuccessFactorsService
 import { mapStatus } from './models/StatusMapping';
 import { StatMgr } from './models/StatMgr';
 import { DateHelper } from './models/DateHelper';
+import { Customer } from './models/Customer';
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -30,7 +32,7 @@ import { DateHelper } from './models/DateHelper';
 //   response.send("Hello from Firebase!");
 // });
 
-export const onApplicationUpdated = onCall(async request => {
+export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3' }, async request => {
   let service = new CustomerService();
   let customerList = await service.getCustomerList();
 
@@ -57,7 +59,7 @@ export const onApplicationUpdated = onCall(async request => {
       let dbApp: Application = {
         id: app.applicationId,
         candidateName: app.firstName + ' ' + app.lastName,
-        jobTitle: 'unknown',
+        jobTitle: app.jobRequisition.jobReqLocale.results[0]?.jobTitle,
         jobId: app.jobReqId,
         statusArr: statusList,
         stats: stats,
@@ -78,3 +80,13 @@ function convertStates(application: any): ApplicationStatus[] {
   });
   return list;
 }
+
+export const onApplicationUpdated = onDocumentWritten('customers/{customer}/applications/{appId}', async request => {
+  let app: Application = request?.data?.after.data() as Application;
+  if (!app) return;
+  app.jobId;
+
+  let customerService = new CustomerService();
+  let customer: Customer = await customerService.getCustomer(request.params.customer);
+  let sfService = new SuccessFactorsService(customer);
+});
