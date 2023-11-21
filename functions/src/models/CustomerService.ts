@@ -1,15 +1,14 @@
-import { ICustomer } from './Database';
+import { Customer } from './Customer';
 import * as admin from 'firebase-admin';
 
 export class CustomerService {
-  async getCustomerList(): Promise<ICustomer[]> {
+  async getCustomerList(): Promise<Customer[]> {
     const result = await admin.firestore().collection('customers').get();
-
-    const customerList: ICustomer[] = [];
+    let customerList: Customer[] = [];
 
     for (const document of result.docs) {
-      const item: ICustomer = {
-        ...(document.data() as ICustomer),
+      const item: Customer = {
+        ...(document.data() as Customer),
         id: document.id,
       };
       customerList.push(item);

@@ -1,12 +1,12 @@
-import { IDashboardRequest, IDashboardResponse } from './DashboardModels';
-import { ICustomer } from './Database';
-import { IGetApplicationDataRequest, IGetApplicationDataReponse } from './RequestObject';
+import { DashboardRequest, DashboardResponse } from './Dashboard';
+import { Customer } from './Customer';
+import { GetApplicationRequest, GetApplicationReponse } from './Application';
 
 export class SuccessFactorsService {
-  constructor(private customer: ICustomer) {}
+  constructor(private customer: Customer) {}
   async getAllChangedApplications(lastRunDate?: Date) {}
 
-  getApplicationData(request: IGetApplicationDataRequest): IGetApplicationDataReponse | undefined {
+  getApplicationData(request: GetApplicationRequest): GetApplicationReponse | undefined {
     return undefined;
   }
 
@@ -34,7 +34,7 @@ export class SuccessFactorsService {
     return requestString;
   }
 
-  private async getSAMLToken(customer: ICustomer) {
+  private async getSAMLToken(customer: Customer) {
     const details: any = {
       client_id: customer.clientID,
       user_id: customer.userID,
@@ -55,7 +55,6 @@ export class SuccessFactorsService {
     const result = await response.text();
 
     if (response.status > 299) {
-      // this.logger.error(`Error during getSAMLToken`, { result, apiHeader: this.apiKeyHeader, tokenBaseUrl: this.tokenBaseUrl });
       throw new Error(result);
     }
     return result;
@@ -66,7 +65,7 @@ export class SuccessFactorsService {
     return `Bearer ${token}`;
   }
 
-  private async getBearerToken(customer: ICustomer) {
+  private async getBearerToken(customer: Customer) {
     const samlToken = await this.getSAMLToken(customer);
     if (samlToken) {
       const details: any = {
@@ -90,19 +89,17 @@ export class SuccessFactorsService {
       const result = (await response.json()) as any;
 
       if (result.errorHttpCode) {
-        // this.logger.error(`Error during getToken`, { error: result.errorMessage, details });
         throw new Error(result.errorMessage);
       }
-      // await this.cacheService.setItem(cacheKey, result.access_token, ttl);
       return result.access_token;
     }
   }
 
-  getDashboardData(request: IDashboardRequest): IDashboardResponse[] | undefined {
+  getDashboardData(request: DashboardRequest): DashboardResponse[] | undefined {
     return undefined;
   } // includes previous months/days, however the filter is set
 
-  getDashboardDetailedData(request: IDashboardRequest): IDashboardResponse[] | undefined {
+  getDashboardDetailedData(request: DashboardRequest): DashboardResponse[] | undefined {
     return undefined;
   } //includes all jobs in filter range
 
@@ -112,9 +109,13 @@ export class SuccessFactorsService {
     request: any, //includes an array of all applications at this job  in filter range
   ) {}
 
-  async getStatusList() {
-    const url = `${this.customer.apiUrl}odata/v2/JobApplicationStatusLabel?$format=json`;
+  async getModifiedApplications(lastRunDate?: Date) {
+    let url = `${this.customer.apiUrl}odata/v2/JobApplication?$format=json&$expand=jobApplicationStatusAuditTrail,jobApplicationStatusAuditTrail/jobAppStatus`;
 
+    if (lastRunDate) {
+      const formattedDate = lastRunDate.toISOString();
+      url += '&$filter=' + encodeURIComponent(`lastModifiedDateTime gt '${formattedDate}'`);
+    }
     // this.logger.debug('sf getStatusList', url);
     const response = await fetch(url, {
       method: 'GET',

@@ -1,4 +1,5 @@
-export * from './DashboardModels';
+export * from './Dashboard';
 export * from './Database';
-export * from './RequestObject';
+export * from './Application';
+export * from './Job';
 export * from './SuccessfactorsService';
