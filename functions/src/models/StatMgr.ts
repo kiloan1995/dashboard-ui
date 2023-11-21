@@ -15,11 +15,11 @@ export class StatMgr {
     let startDate: Date | null = null;
     let endDate: Date | null = null;
     for (let state of states) {
-      if (state.status == ApplicationStatusType.STATUS_INTERVIEW) startDate = state.date;
+      if (state.status == ApplicationStatusType.STATUS_APPLIED) startDate = state.date;
       if (state.status == targetState) endDate = state.date;
     }
     if (startDate && endDate) {
-      return endDate.getTime() - startDate.getTime() * 1000 * 60; // milliseonds to minutes
+      return (endDate.getTime() - startDate.getTime()) / 1000 / 60; // milliseonds to minutes
     }
     return undefined;
   }

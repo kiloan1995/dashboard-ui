@@ -1,7 +1,8 @@
-import { DashboardRequest, DashboardResponse } from '../Dashboard';
 import { Customer } from '../Customer';
 import { GetApplicationRequest } from '../Requests/ApplicationRequest';
+import { DashboardRequest } from '../Requests/DashboardRequest';
 import { GetApplicationReponse } from '../Response/ApplicationsResponse';
+import { DashboardResponse } from '../Response/DashboardResponse';
 
 export class SuccessFactorsService {
   constructor(private customer: Customer) {}
