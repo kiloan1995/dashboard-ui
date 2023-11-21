@@ -6,6 +6,7 @@ export interface Job {
   templateName: string; // use only if data is evaluated in dashboard (eg per manager, employee, apprentice etc.)
   averageTimeSpans: GetApplicationReponse;
   applicationIDs: string[];
-  timeSpanPostingDateTillFirstApplicationInMinutes?: number;
+  /**In Minutes */
+  timePostingDateTillFirstApplication?: number;
   lastClosedApplicationDate?: Date;
 }

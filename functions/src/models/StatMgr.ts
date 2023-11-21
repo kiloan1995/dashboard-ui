@@ -1,22 +1,25 @@
 import { ApplicationStatus, ApplicationStatusType, ApplicationStats } from './Application';
 
 export class StatMgr {
-  static calculateAppStats(states: ApplicationStatus[]): ApplicationStats {
+  static calculateAppStats(statuses: ApplicationStatus[]): ApplicationStats {
     return {
-      timeFromAppliedToInterview: StatMgr.calculateTimeTill(states, ApplicationStatusType.STATUS_INTERVIEW),
-      timeInterviewToHired: StatMgr.calculateTimeTill(states, ApplicationStatusType.STATUS_HIRED),
-      timeInterviewToRejected: StatMgr.calculateTimeTill(states, ApplicationStatusType.STATUS_REJECTED || StatMgr.calculateTimeTill(states, ApplicationStatusType.STATUS_WITHDRAWN)),
-      hasReachedFinalStatus: StatMgr.containsAnyFinalState(states),
-      closedDate: StatMgr.getClosedDate(states),
+      timeFromAppliedToInterview: StatMgr.calculateTimeTill(statuses, ApplicationStatusType.STATUS_INTERVIEW),
+      timeInterviewToHired: StatMgr.calculateTimeTill(statuses, ApplicationStatusType.STATUS_HIRED),
+      timeInterviewToRejected: StatMgr.calculateTimeTill(
+        statuses,
+        ApplicationStatusType.STATUS_REJECTED || StatMgr.calculateTimeTill(statuses, ApplicationStatusType.STATUS_WITHDRAWN),
+      ),
+      hasReachedFinalStatus: StatMgr.containsAnyFinalStatus(statuses),
+      closedDate: StatMgr.getClosedDate(statuses),
     };
   }
   /**Returns time in Minutes */
-  static calculateTimeTill(states: ApplicationStatus[], targetState: ApplicationStatusType): number | undefined {
+  static calculateTimeTill(statuses: ApplicationStatus[], targetState: ApplicationStatusType): number | undefined {
     let startDate: Date | null = null;
     let endDate: Date | null = null;
-    for (let state of states) {
-      if (state.status == ApplicationStatusType.STATUS_APPLIED) startDate = state.date;
-      if (state.status == targetState) endDate = state.date;
+    for (let status of statuses) {
+      if (status.status == ApplicationStatusType.STATUS_APPLIED) startDate = status.date;
+      if (status.status == targetState) endDate = status.date;
     }
     if (startDate && endDate) {
       return (endDate.getTime() - startDate.getTime()) / 1000 / 60; // milliseonds to minutes
@@ -24,17 +27,17 @@ export class StatMgr {
     return undefined;
   }
 
-  static getClosedDate(states: ApplicationStatus[]): Date | undefined {
-    for (let state of states) {
+  static getClosedDate(statuses: ApplicationStatus[]): Date | undefined {
+    for (let state of statuses) {
       if (ApplicationStatusType.isFinalStatus(state.status)) return state.date;
     }
     return undefined;
   }
 
-  static containsAnyFinalState(states: ApplicationStatus[]): boolean {
-    if (!states) return false;
-    for (let state of states) {
-      if (ApplicationStatusType.isFinalStatus(state.status)) return true;
+  static containsAnyFinalStatus(statuses: ApplicationStatus[]): boolean {
+    if (!statuses) return false;
+    for (let status of statuses) {
+      if (ApplicationStatusType.isFinalStatus(status.status)) return true;
     }
     return false;
   }
