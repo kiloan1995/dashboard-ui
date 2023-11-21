@@ -1,4 +1,4 @@
-import { ApplicationState } from './Application';
+import { ApplicationStatus } from './Application';
 
 export interface Customer {
   id: string;
@@ -7,5 +7,5 @@ export interface Customer {
   apiUrl: SVGStringList;
   companyID: string;
   userID: string;
-  stateMapping: { key: string; value: ApplicationState };
+  stateMapping: { key: string; value: ApplicationStatus };
 }

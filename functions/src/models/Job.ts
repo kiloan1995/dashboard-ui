@@ -1,4 +1,4 @@
-import { GetApplicationReponse, ApplicationStats } from './Application';
+import { GetApplicationReponse } from './Response/ApplicationsResponse';
 
 export interface Job {
   jobID: string;
@@ -8,14 +8,4 @@ export interface Job {
   applicationIDs: string[];
   timeSpanPostingDateTillFirstApplicationInMinutes?: number;
   lastClosedApplicationDate?: Date;
-}
-
-export interface GetJobRequest {
-  jobID: string;
-}
-
-export interface GetJobResponse {
-  jobTitle: string;
-  applications: GetApplicationReponse[];
-  aggregated: ApplicationStats;
 }

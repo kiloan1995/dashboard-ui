@@ -1,4 +1,4 @@
-import { Customer } from './Customer';
+import { Customer } from '../Customer';
 import * as admin from 'firebase-admin';
 
 export class CustomerService {

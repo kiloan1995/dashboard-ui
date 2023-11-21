@@ -1,43 +1,31 @@
 export interface Application {
-  ID: string;
-  jobID: string;
+  id: string;
+  jobId: string;
   jobTitle: string;
   candidateName: string;
-  timeSpans: GetApplicationReponse;
-  states: ApplicationState[];
+  stats: ApplicationStats;
+  statusArr: ApplicationStatus[];
 }
 
-export enum ApplicationStateType {
-  STATE_APPLIED,
-  STATE_FORWARDED,
-  STATE_INTERVIEW,
-  STATE_HIRED,
-  STATE_REJECTED,
-  STATE_WITHDRAWN,
+export enum ApplicationStatusType {
+  STATUS_APPLIED,
+  STATUS_FORWARDED,
+  STATUS_INTERVIEW,
+  STATUS_HIRED,
+  STATUS_REJECTED,
+  STATUS_WITHDRAWN,
 }
 
-export namespace ApplicationStateType {
-  export function isFinalState(state: ApplicationStateType) {
-    return state >= ApplicationStateType.STATE_HIRED;
+export namespace ApplicationStatusType {
+  export function isFinalStatus(status: ApplicationStatusType) {
+    return status >= ApplicationStatusType.STATUS_HIRED;
   }
 }
 
-export interface ApplicationState {
-  stateNameInSF: string;
-  state: ApplicationStateType;
+export interface ApplicationStatus {
+  statusNameInSF: string;
+  status: ApplicationStatusType;
   date: Date;
-}
-
-export interface GetApplicationRequest {
-  applicationID: string;
-}
-
-export interface GetApplicationReponse {
-  applicationID: string;
-  jobTitle: string;
-  candidateName: string;
-  stateList: ApplicationState[];
-  stats: ApplicationStats;
 }
 
 export interface ApplicationStats {
@@ -47,6 +35,6 @@ export interface ApplicationStats {
   timeInterviewToHired?: number;
   /**In Minutes*/
   timeInterviewToRejected?: number;
-  hasReachedFinalState: boolean;
+  hasReachedFinalStatus: boolean;
   closedDate?: Date;
 }
