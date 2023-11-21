@@ -72,7 +72,7 @@ function convertStates(application: any): ApplicationState[] {
 
   application.jobApplicationStatusAuditTrail.results.forEach((result: any) => {
     let sfStateName = result.jobAppStatus.appStatusName;
-    list.push({ stateNameInSF: sfStateName, state: mapState(sfStateName), date: new Date() }); //@TODO write helper dateformatter
+    list.push({ stateNameInSF: sfStateName, state: mapState(sfStateName), date: sfDateFormatter(result.createdDateTime) });
   });
   return list;
 }
@@ -97,4 +97,13 @@ function calculateTimeTill(states: ApplicationState[], targetState: ApplicationS
     return endDate.getTime() - startDate.getTime() * 1000 * 60; // milliseonds to minutes
   }
   return undefined;
+}
+
+function sfDateFormatter(dateString: string): Date {
+  //@TODO write helper dateformatter
+  if (dateString) {
+    const result = dateString.replace('/Date(', '').replace(')/', '');
+    return new Date(result);
+  }
+  return new Date();
 }
