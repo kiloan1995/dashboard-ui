@@ -10,9 +10,16 @@ export interface Application {
 export enum ApplicationStateType {
   STATE_APPLIED,
   STATE_FORWARDED,
+  STATE_INTERVIEW,
   STATE_HIRED,
   STATE_REJECTED,
   STATE_WITHDRAWN,
+}
+
+export namespace ApplicationStateType {
+  export function isFinalState(state: ApplicationStateType) {
+    return state >= ApplicationStateType.STATE_HIRED;
+  }
 }
 
 export interface ApplicationState {

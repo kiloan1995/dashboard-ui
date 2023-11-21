@@ -116,7 +116,6 @@ export class SuccessFactorsService {
       const formattedDate = lastRunDate.toISOString();
       url += '&$filter=' + encodeURIComponent(`lastModifiedDateTime gt '${formattedDate}'`);
     }
-    // this.logger.debug('sf getStatusList', url);
     const response = await fetch(url, {
       method: 'GET',
       headers: {
