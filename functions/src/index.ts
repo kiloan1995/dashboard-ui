@@ -48,7 +48,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3'
     for (let app of apps) {
       let statusList = convertStates(app);
       let stats: ApplicationStats = StatMgr.calculateAppStats(statusList);
-      
+
       let dbApp: Application = {
         id: app.applicationId,
         candidateName: app.firstName + ' ' + app.lastName,
@@ -86,13 +86,7 @@ export const onApplicationUpdated = onDocumentWritten('customers/{customer}/appl
   let job = await dbService.getJob(request.params.customer, app.jobId);
   if (job) {
     job.applicationIds.push(app.id);
-    let timeFromAppliedToInterview = job.timeStats.timeFromAppliedToInterview;
-    let timeInterviewToHired = job.timeStats.timeInterviewToHired;
-    let timeInterviewToRejected = job.timeStats.timeInterviewToRejected;
-
-    if (timeFromAppliedToInterview) {
-      job.timeStats.timeFromAppliedToInterview = timeFromAppliedToInterview + app.stats.timeStats.timeFromAppliedToInterview;
-    }
+    job.timeStats = StatMgr.calcAverage(job.timeStats, app.stats.timeStats);
   } else {
     let timeStats: ApplicationTimeStat = {
       timeFromAppliedToInterview: app.stats.timeStats.timeFromAppliedToInterview,

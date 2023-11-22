@@ -6,9 +6,9 @@ export interface StatDay {
 
 export interface ApplicationTimeStat {
   /**In Minutes*/
-  timeFromAppliedToInterview?: number;
+  timeFromAppliedToInterview: number;
   /**In Minutes*/
-  timeInterviewToHired?: number;
+  timeInterviewToHired: number;
   /**In Minutes*/
-  timeInterviewToRejected?: number;
+  timeInterviewToRejected: number;
 }
