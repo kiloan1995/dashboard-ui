@@ -18,7 +18,7 @@ admin.firestore().settings({
 // import { onRequest } from 'firebase-functions/v2/https';
 // import * as logger from 'firebase-functions/logger';
 import { CustomerService } from './models/Services/CustomerService';
-import { ApplicationStatus, Application, ApplicationStats, SuccessFactorsService, DatabaseService, Job, ApplicationStatusType } from './models';
+import { ApplicationStatus, Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
 import { mapStatus } from './models/StatusMapping';
 import { StatMgr } from './models/StatMgr';
 import { DateHelper } from './models/DateHelper';
@@ -81,7 +81,7 @@ export const onApplicationUpdated = onDocumentWritten('customers/{customer}/appl
   let customerService = new CustomerService();
   let customer: Customer = await customerService.getCustomer(request.params.customer);
   let dbService = new DatabaseService(customer);
-  let apps: Application[] = await dbService.getAllApplicationsAtJob(request.params.customer, app.jobId);
+  // let apps: Application[] = await dbService.getAllApplicationsAtJob(request.params.customer, app.jobId);
 
   let job = await dbService.getJob(request.params.customer, app.jobId);
   if (job) {
