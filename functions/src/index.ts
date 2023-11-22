@@ -3,10 +3,10 @@ import * as admin from 'firebase-admin';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 
 admin.initializeApp();
-
 admin.firestore().settings({
   ignoreUndefinedProperties: true,
 });
+const serverRegion = 'europe-west3';
 /**
  * Import function triggers from their respective submodules:
  *
@@ -31,7 +31,7 @@ import { ApplicationTimeStat } from './models/Stats';
 //   response.send("Hello from Firebase!");
 // });
 
-export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3' }, async request => {
+export const onWorkerInit = onCall({ timeoutSeconds: 300, region: serverRegion }, async request => {
   let service = new CustomerService();
   let customerList = await service.getCustomerList();
 
@@ -62,7 +62,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3'
   return appList;
 });
 
-export const onApplicationUpdated = onDocumentWritten('customers/{customer}/applications/{appId}', async request => {
+export const onApplicationUpdated = onDocumentWritten({ region: serverRegion, document: 'customers/{customer}/applications/{appId}' }, async request => {
   let app: Application = request?.data?.after.data() as Application;
   if (!app) return;
 
