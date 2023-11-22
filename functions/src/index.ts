@@ -48,7 +48,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3'
     for (let app of apps) {
       let statusList = convertStates(app);
       let stats: ApplicationStats = StatMgr.calculateAppStats(statusList);
-
+      
       let dbApp: Application = {
         id: app.applicationId,
         candidateName: app.firstName + ' ' + app.lastName,
