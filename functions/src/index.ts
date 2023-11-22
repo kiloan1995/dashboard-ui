@@ -18,10 +18,8 @@ admin.firestore().settings({
 // import { onRequest } from 'firebase-functions/v2/https';
 // import * as logger from 'firebase-functions/logger';
 import { CustomerService } from './models/Services/CustomerService';
-import { ApplicationStatus, Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
-import { mapStatus } from './models/StatusMapping';
+import { Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
 import { StatMgr } from './models/StatMgr';
-import { DateHelper } from './models/DateHelper';
 import { Customer } from './models/Customer';
 import { ApplicationTimeStat } from './models/Stats';
 
@@ -46,7 +44,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3'
 
     let dbHelper = new DatabaseService(customer);
     for (let app of apps) {
-      let statusList = convertStates(app);
+      let statusList = dbHelper.convertStatuses(app);
       let stats: ApplicationStats = StatMgr.calculateAppStats(statusList);
 
       let dbApp: Application = {
@@ -63,16 +61,6 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3'
   }
   return appList;
 });
-
-function convertStates(application: any): ApplicationStatus[] {
-  let list: ApplicationStatus[] = [];
-
-  application.jobApplicationStatusAuditTrail.results.forEach((result: any) => {
-    let sfStateName = result.jobAppStatus.appStatusName;
-    list.push({ statusNameInSF: sfStateName, status: mapStatus(sfStateName), date: DateHelper.sfStringToDate(result.createdDateTime) });
-  });
-  return list;
-}
 
 export const onApplicationUpdated = onDocumentWritten('customers/{customer}/applications/{appId}', async request => {
   let app: Application = request?.data?.after.data() as Application;

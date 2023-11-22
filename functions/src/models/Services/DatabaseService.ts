@@ -1,7 +1,9 @@
-import { Application } from '../Application';
+import { Application, ApplicationStatus } from '../Application';
 import { Customer } from '../Customer';
 import * as admin from 'firebase-admin';
 import { Job } from '../Job';
+import { mapStatus } from '../StatusMapping';
+import { DateHelper } from '../DateHelper';
 
 export class DatabaseService {
   constructor(private customer: Customer) {}
@@ -39,5 +41,14 @@ export class DatabaseService {
       return item;
     }
     return undefined;
+  }
+  convertStatuses(application: any): ApplicationStatus[] {
+    let list: ApplicationStatus[] = [];
+
+    application.jobApplicationStatusAuditTrail.results.forEach((result: any) => {
+      let sfStateName = result.jobAppStatus.appStatusName;
+      list.push({ statusNameInSF: sfStateName, status: mapStatus(sfStateName), date: DateHelper.sfStringToDate(result.createdDateTime) });
+    });
+    return list;
   }
 }
