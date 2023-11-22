@@ -1,35 +1,23 @@
 import { onCall } from 'firebase-functions/v2/https';
-import * as admin from 'firebase-admin';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
+import * as admin from 'firebase-admin';
+import { CustomerService } from './models/Services/CustomerService';
+import { Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
+import { StatMgr } from './models/StatMgr';
+import { Customer } from './models/Customer';
+import { ApplicationTimeStat } from './models/Stats';
+// import * as logger from 'firebase-functions/logger';
+/**
+ * Import function triggers from their respective submodules: *
+ * import {onDocumentWritten} from "firebase-functions/v2/firestore"; *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ */
 
 admin.initializeApp();
 admin.firestore().settings({
   ignoreUndefinedProperties: true,
 });
 const serverRegion = 'europe-west3';
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-// import { onRequest } from 'firebase-functions/v2/https';
-// import * as logger from 'firebase-functions/logger';
-import { CustomerService } from './models/Services/CustomerService';
-import { Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
-import { StatMgr } from './models/StatMgr';
-import { Customer } from './models/Customer';
-import { ApplicationTimeStat } from './models/Stats';
-
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 
 export const onWorkerInit = onCall({ timeoutSeconds: 300, region: serverRegion }, async request => {
   let service = new CustomerService();
