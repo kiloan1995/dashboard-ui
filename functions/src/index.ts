@@ -18,11 +18,12 @@ admin.firestore().settings({
 // import { onRequest } from 'firebase-functions/v2/https';
 // import * as logger from 'firebase-functions/logger';
 import { CustomerService } from './models/Services/CustomerService';
-import { ApplicationStatus, Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
+import { ApplicationStatus, Application, ApplicationStats, SuccessFactorsService, DatabaseService, Job, ApplicationStatusType } from './models';
 import { mapStatus } from './models/StatusMapping';
 import { StatMgr } from './models/StatMgr';
 import { DateHelper } from './models/DateHelper';
 import { Customer } from './models/Customer';
+import { ApplicationTimeStat } from './models/Stats';
 
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
@@ -47,14 +48,6 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: 'europe-west3'
     for (let app of apps) {
       let statusList = convertStates(app);
       let stats: ApplicationStats = StatMgr.calculateAppStats(statusList);
-
-      // let response: GetApplicationReponse = {
-      //   applicationID: app.applicationId,
-      //   candidateName: app.firstName + ' ' + app.lastName,
-      //   jobTitle: '',
-      //   stateList: [],
-      //   stats: stats,
-      // };
 
       let dbApp: Application = {
         id: app.applicationId,
@@ -84,9 +77,37 @@ function convertStates(application: any): ApplicationStatus[] {
 export const onApplicationUpdated = onDocumentWritten('customers/{customer}/applications/{appId}', async request => {
   let app: Application = request?.data?.after.data() as Application;
   if (!app) return;
-  app.jobId;
 
   let customerService = new CustomerService();
   let customer: Customer = await customerService.getCustomer(request.params.customer);
-  let sfService = new SuccessFactorsService(customer);
+  let dbService = new DatabaseService(customer);
+  let apps: Application[] = await dbService.getAllApplicationsAtJob(request.params.customer, app.jobId);
+
+  let job = await dbService.getJob(request.params.customer, app.jobId);
+  if (job) {
+    job.applicationIds.push(app.id);
+    let timeFromAppliedToInterview = job.timeStats.timeFromAppliedToInterview;
+    let timeInterviewToHired = job.timeStats.timeInterviewToHired;
+    let timeInterviewToRejected = job.timeStats.timeInterviewToRejected;
+
+    if (timeFromAppliedToInterview) {
+      job.timeStats.timeFromAppliedToInterview = timeFromAppliedToInterview + app.stats.timeStats.timeFromAppliedToInterview;
+    }
+  } else {
+    let timeStats: ApplicationTimeStat = {
+      timeFromAppliedToInterview: app.stats.timeStats.timeFromAppliedToInterview,
+      timeInterviewToHired: app.stats.timeStats.timeInterviewToHired,
+      timeInterviewToRejected: app.stats.timeStats.timeInterviewToRejected,
+    };
+    job = {
+      applicationIds: [app.id],
+      jobId: app.id,
+      jobTitle: app.jobTitle,
+      timeStats: timeStats,
+      lastClosedApplicationDate: Application.findClosedDate(app),
+      timePostingDateTillFirstApplication: 0,
+      templateName: 'unset',
+    };
+  }
+  // job stats updaten.
 });

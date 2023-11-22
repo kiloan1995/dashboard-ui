@@ -3,3 +3,12 @@ export interface StatDay {
   changedApplicationIDCount: number;
   closedApplicationIDCount: number;
 }
+
+export interface ApplicationTimeStat {
+  /**In Minutes*/
+  timeFromAppliedToInterview?: number;
+  /**In Minutes*/
+  timeInterviewToHired?: number;
+  /**In Minutes*/
+  timeInterviewToRejected?: number;
+}

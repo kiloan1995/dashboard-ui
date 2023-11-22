@@ -1,12 +1,12 @@
-import { GetApplicationReponse } from './Response/ApplicationsResponse';
+import { ApplicationTimeStat } from './Stats';
 
 export interface Job {
-  jobID: string;
+  jobId: string;
   jobTitle: string;
   templateName: string; // use only if data is evaluated in dashboard (eg per manager, employee, apprentice etc.)
-  averageTimeSpans: GetApplicationReponse;
-  applicationIDs: string[];
+  applicationIds: string[];
   /**In Minutes */
   timePostingDateTillFirstApplication?: number;
+  timeStats: ApplicationTimeStat;
   lastClosedApplicationDate?: Date;
 }

@@ -1,3 +1,5 @@
+import { ApplicationTimeStat } from './Stats';
+
 export interface Application {
   id: string;
   jobId: string;
@@ -5,6 +7,15 @@ export interface Application {
   candidateName: string;
   stats: ApplicationStats;
   statusArr: ApplicationStatus[];
+}
+
+export namespace Application {
+  export function findClosedDate(app: Application): Date | undefined {
+    for (let status of app.statusArr) {
+      if (ApplicationStatusType.isFinalStatus(status.status)) return status.date;
+    }
+    return undefined;
+  }
 }
 
 export enum ApplicationStatusType {
@@ -29,12 +40,7 @@ export interface ApplicationStatus {
 }
 
 export interface ApplicationStats {
-  /**In Minutes*/
-  timeFromAppliedToInterview?: number;
-  /**In Minutes*/
-  timeInterviewToHired?: number;
-  /**In Minutes*/
-  timeInterviewToRejected?: number;
+  timeStats: ApplicationTimeStat;
   hasReachedFinalStatus: boolean;
   closedDate?: Date;
 }
