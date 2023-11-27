@@ -115,7 +115,8 @@ export class SuccessFactorsService {
     // schriftlich: über selects und expands schreiben, damit performance rausholen.
     let expand = 'jobApplicationStatusAuditTrail,jobApplicationStatusAuditTrail/jobAppStatus,jobRequisition,jobRequisition/jobReqLocale';
     let select = 'jobApplicationStatusAuditTrail,applicationId,jobReqId,jobRequisition/jobReqLocale/jobTitle,firstName,lastName';
-    let url = `${this.customer.apiUrl}odata/v2/JobApplication?$format=json&$expand=${expand}&$select=${select}`;
+    let filter = "applicationDate gt '2023-05-22T05:00:00'";
+    let url = `${this.customer.apiUrl}odata/v2/JobApplication?$format=json&$expand=${expand}&$select=${select}&$filter=${filter}`;
 
     if (lastRunDate) {
       const formattedDate = lastRunDate.toISOString();

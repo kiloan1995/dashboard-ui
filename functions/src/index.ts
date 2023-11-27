@@ -6,7 +6,7 @@ import { Application, ApplicationStats, SuccessFactorsService, DatabaseService }
 import { StatMgr } from './models/StatMgr';
 import { Customer } from './models/Customer';
 import { ApplicationTimeStat } from './models/Stats';
-// import * as logger from 'firebase-functions/logger';
+import * as logger from 'firebase-functions/logger';
 /**
  * Import function triggers from their respective submodules: *
  * import {onDocumentWritten} from "firebase-functions/v2/firestore"; *
@@ -31,6 +31,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: serverRegion }
     let apps = (await appResponse.json()).d?.results;
 
     let dbHelper = new DatabaseService(customer);
+    logger.log('Application count from Successfactors: ', apps.length);
     for (let app of apps) {
       let statusList = dbHelper.convertStatuses(app);
       let stats: ApplicationStats = StatMgr.calculateAppStats(statusList);
