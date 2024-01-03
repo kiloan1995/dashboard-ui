@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Job } from "../functions/src/models/Job";
+export { Job } from "../functions/src/models/Job";
 export namespace Components {
     interface AppRoot {
     }
@@ -19,6 +21,19 @@ export namespace Components {
     }
     interface ChartPie {
         "textTotal": string;
+    }
+    interface FilterPicker {
+    }
+    interface JobList {
+        "columnNames": string[];
+        "jobs": Job[];
+    }
+    interface PageDashboard {
+    }
+    interface PreviewTile {
+        "bIsAverage": boolean;
+        "small": string;
+        "title": string;
     }
 }
 declare global {
@@ -52,12 +67,40 @@ declare global {
         prototype: HTMLChartPieElement;
         new (): HTMLChartPieElement;
     };
+    interface HTMLFilterPickerElement extends Components.FilterPicker, HTMLStencilElement {
+    }
+    var HTMLFilterPickerElement: {
+        prototype: HTMLFilterPickerElement;
+        new (): HTMLFilterPickerElement;
+    };
+    interface HTMLJobListElement extends Components.JobList, HTMLStencilElement {
+    }
+    var HTMLJobListElement: {
+        prototype: HTMLJobListElement;
+        new (): HTMLJobListElement;
+    };
+    interface HTMLPageDashboardElement extends Components.PageDashboard, HTMLStencilElement {
+    }
+    var HTMLPageDashboardElement: {
+        prototype: HTMLPageDashboardElement;
+        new (): HTMLPageDashboardElement;
+    };
+    interface HTMLPreviewTileElement extends Components.PreviewTile, HTMLStencilElement {
+    }
+    var HTMLPreviewTileElement: {
+        prototype: HTMLPreviewTileElement;
+        new (): HTMLPreviewTileElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "chart-histogram": HTMLChartHistogramElement;
         "chart-index": HTMLChartIndexElement;
         "chart-page": HTMLChartPageElement;
         "chart-pie": HTMLChartPieElement;
+        "filter-picker": HTMLFilterPickerElement;
+        "job-list": HTMLJobListElement;
+        "page-dashboard": HTMLPageDashboardElement;
+        "preview-tile": HTMLPreviewTileElement;
     }
 }
 declare namespace LocalJSX {
@@ -75,12 +118,29 @@ declare namespace LocalJSX {
     interface ChartPie {
         "textTotal"?: string;
     }
+    interface FilterPicker {
+    }
+    interface JobList {
+        "columnNames"?: string[];
+        "jobs"?: Job[];
+    }
+    interface PageDashboard {
+    }
+    interface PreviewTile {
+        "bIsAverage"?: boolean;
+        "small"?: string;
+        "title"?: string;
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "chart-histogram": ChartHistogram;
         "chart-index": ChartIndex;
         "chart-page": ChartPage;
         "chart-pie": ChartPie;
+        "filter-picker": FilterPicker;
+        "job-list": JobList;
+        "page-dashboard": PageDashboard;
+        "preview-tile": PreviewTile;
     }
 }
 export { LocalJSX as JSX };
@@ -92,6 +152,10 @@ declare module "@stencil/core" {
             "chart-index": LocalJSX.ChartIndex & JSXBase.HTMLAttributes<HTMLChartIndexElement>;
             "chart-page": LocalJSX.ChartPage & JSXBase.HTMLAttributes<HTMLChartPageElement>;
             "chart-pie": LocalJSX.ChartPie & JSXBase.HTMLAttributes<HTMLChartPieElement>;
+            "filter-picker": LocalJSX.FilterPicker & JSXBase.HTMLAttributes<HTMLFilterPickerElement>;
+            "job-list": LocalJSX.JobList & JSXBase.HTMLAttributes<HTMLJobListElement>;
+            "page-dashboard": LocalJSX.PageDashboard & JSXBase.HTMLAttributes<HTMLPageDashboardElement>;
+            "preview-tile": LocalJSX.PreviewTile & JSXBase.HTMLAttributes<HTMLPreviewTileElement>;
         }
     }
 }

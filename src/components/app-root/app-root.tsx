@@ -19,7 +19,8 @@ export class AppRoot {
   render() {
     return (
       <Host>
-        <chart-page></chart-page>
+        {/* <chart-page></chart-page> */}
+        <page-dashboard></page-dashboard>
         {/* <div ref={ref => (this.mainRef = ref)}></div> */}
       </Host>
     );
