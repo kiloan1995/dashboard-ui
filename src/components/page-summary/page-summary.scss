@@ -14,9 +14,8 @@
     gap: 48px;
     max-width: fit-content;
     margin: 0 auto;
-
-    preview-tile {
-      flex-grow: 0;
+    > * {
+      flex: 1 1 160px;
     }
   }
 }
