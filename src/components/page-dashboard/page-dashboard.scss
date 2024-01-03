@@ -4,23 +4,11 @@
   .page-container {
     max-width: 1440px;
     // top left bottom right
-    margin: 0 auto 48px auto; 
-    padding-top: 160px; // top = 112 (header-bar) + 48 (gap)
+    margin: 0 auto 48px auto;
+    padding-top: 114px; // top = 66 (header-bar) + 48 (gap)
     display: flex;
     flex-direction: column;
     gap: 48px;
-
-    .preview-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 48px;
-      max-width: fit-content;
-      margin: 0 auto;
-
-      preview-tile {
-        flex-grow: 0;
-      }
-    }
 
     .chart-index-container {
       background-color: white;

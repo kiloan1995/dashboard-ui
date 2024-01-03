@@ -1,0 +1,22 @@
+@use '../../global/variables.scss';
+
+:host {
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: variables.$font-family;
+    color: variables.$gray-dark2;
+  }
+
+  .preview-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    max-width: fit-content;
+    margin: 0 auto;
+
+    preview-tile {
+      flex-grow: 0;
+    }
+  }
+}

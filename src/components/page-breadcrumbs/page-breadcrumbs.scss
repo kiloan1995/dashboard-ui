@@ -1,0 +1,22 @@
+@use '../../global/variables.scss';
+
+:host {
+  display: flex;
+  align-items: center;
+
+  a {
+    font-size: 24px;
+    font-weight: 400;
+    font-family: variables.$font-family;
+    color: variables.$gray-dark2;
+    text-decoration: none;
+
+    :visited,
+    :hover {
+      color: variables.$gray-dark2;
+    }
+  }
+  :first-child {
+    font-weight: 700;
+  }
+}
