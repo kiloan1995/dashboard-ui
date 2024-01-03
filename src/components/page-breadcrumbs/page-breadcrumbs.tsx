@@ -12,7 +12,14 @@ export class PageBreadcrumbs {
     return (
       <Host>
         {this.breadcrumbs.map((breadcrumb, i) => {
-          return <a href={breadcrumb.url}>{breadcrumb.label + (i + 1 < this.breadcrumbs.length ? '>' : '')}</a>;
+          return (
+            <div class="link-container">
+              <a class={{ first: i == 0 }} href={breadcrumb.url}>
+                {breadcrumb.label}
+              </a>
+              {i + 1 < this.breadcrumbs.length && <div class="thingy">{'>'}</div>}
+            </div>
+          );
         })}
       </Host>
     );

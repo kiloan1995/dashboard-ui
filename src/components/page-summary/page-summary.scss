@@ -15,7 +15,8 @@
     max-width: fit-content;
     margin: 0 auto;
     > * {
-      flex: 1 1 160px;
+      // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout/Mastering_wrapping_of_flex_items
+      flex: 1 1 140px;
     }
   }
 }

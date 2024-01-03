@@ -3,20 +3,33 @@
 :host {
   display: flex;
   align-items: center;
-
-  a {
-    font-size: 24px;
+  gap: 8px;
+  .link-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-weight: 400;
+    font-size: 24px;
     font-family: variables.$font-family;
     color: variables.$gray-dark2;
-    text-decoration: none;
 
-    :visited,
-    :hover {
+    a {
+      font-size: 24px;
+      font-weight: 400;
+      font-family: variables.$font-family;
       color: variables.$gray-dark2;
+      text-decoration: none;
+
+      :visited,
+      :hover {
+        color: variables.$gray-dark2;
+      }
+      &.first {
+        font-weight: 700;
+      }
     }
-  }
-  :first-child {
-    font-weight: 700;
+    .thingy {
+      cursor: default;
+    }
   }
 }
