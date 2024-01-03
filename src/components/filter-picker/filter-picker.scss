@@ -1,7 +1,14 @@
 @use '../../global/variables.scss';
 
 :host {
-
+  input {
+    padding: 8px 12px;
+    border: 1px solid variables.$gray-dark2;
+    border-radius: 4px;
+    // outline: none;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: variables.$font-family;
+    color: variables.$gray-dark2;
+  }
 }
-
-

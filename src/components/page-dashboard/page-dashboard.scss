@@ -3,22 +3,16 @@
 :host {
   .page-container {
     max-width: 1440px;
-    margin: 0 auto;
-    margin-bottom: 48px;
+    // top left bottom right
+    margin: 0 auto 48px auto; 
+    padding-top: 160px; // top = 112 (header-bar) + 48 (gap)
     display: flex;
     flex-direction: column;
     gap: 48px;
 
-    .filter-container {
-      display: flex;
-      flex-direction: row;
-      .filter-name {
-      }
-    }
     .preview-grid {
       display: flex;
       flex-wrap: wrap;
-      // grid-template-columns: 1fr 1fr 1fr;
       gap: 48px;
       max-width: fit-content;
       margin: 0 auto;
@@ -26,15 +20,6 @@
       preview-tile {
         flex-grow: 0;
       }
-    }
-
-    .title {
-      font-size: 24px;
-      font-weight: 700;
-      font-family: variables.$font-family;
-      color: variables.$gray-dark2;
-      padding-top: 24px;
-      padding-bottom: 24px;
     }
 
     .chart-index-container {

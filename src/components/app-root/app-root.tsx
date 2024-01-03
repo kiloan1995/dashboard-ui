@@ -1,7 +1,6 @@
 import { Component, Host, h } from '@stencil/core';
 // import { Router } from '@vaadin/router';
 import fetch from 'node-fetch';
-import { Exception } from 'sass';
 @Component({
   tag: 'app-root',
   styleUrl: 'app-root.scss',

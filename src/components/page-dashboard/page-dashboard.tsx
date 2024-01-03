@@ -35,14 +35,8 @@ export class PageDashboard {
     let jobs: Job[] = [job1, job2, job3];
     return (
       <Host>
+        <page-header title="Application Process Performance" />
         <div class="page-container">
-          <div class="filter-container">
-            <div class="filter-name">Start</div>
-            <filter-picker />
-            <div class="filter-name">End</div>
-            <filter-picker />
-          </div>
-          <h1 class="title">All statuses in the selected timeframe over time</h1>
           <div class="preview-grid">
             <preview-tile title="10 days" small="Time to interview" bIsAverage={true} />
             <preview-tile title="15 days" small="Time to interview" bIsAverage={true} />

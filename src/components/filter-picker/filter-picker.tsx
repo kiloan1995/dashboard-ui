@@ -10,8 +10,6 @@ export class FilterPicker {
     const date = new Date();
     let maxDate: string = date.getFullYear() + '-' + addLeadingZeroes(date.getUTCMonth() + 1, 2) + '-' + addLeadingZeroes(date.getDay(), 2);
     let minDate: string = date.getFullYear() - 4 + '-' + addLeadingZeroes(date.getUTCMonth() + 1, 2) + '-' + addLeadingZeroes(date.getDay(), 2);
-
-    console.log(maxDate, minDate);
     return (
       <Host>
         <input type="date" id="start" value={maxDate} min={minDate} max={maxDate} />
