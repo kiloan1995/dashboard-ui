@@ -30,6 +30,8 @@ export namespace Components {
     }
     interface PageDashboard {
     }
+    interface PageFooter {
+    }
     interface PreviewTile {
         "bIsAverage": boolean;
         "small": string;
@@ -85,6 +87,12 @@ declare global {
         prototype: HTMLPageDashboardElement;
         new (): HTMLPageDashboardElement;
     };
+    interface HTMLPageFooterElement extends Components.PageFooter, HTMLStencilElement {
+    }
+    var HTMLPageFooterElement: {
+        prototype: HTMLPageFooterElement;
+        new (): HTMLPageFooterElement;
+    };
     interface HTMLPreviewTileElement extends Components.PreviewTile, HTMLStencilElement {
     }
     var HTMLPreviewTileElement: {
@@ -100,6 +108,7 @@ declare global {
         "filter-picker": HTMLFilterPickerElement;
         "job-list": HTMLJobListElement;
         "page-dashboard": HTMLPageDashboardElement;
+        "page-footer": HTMLPageFooterElement;
         "preview-tile": HTMLPreviewTileElement;
     }
 }
@@ -126,6 +135,8 @@ declare namespace LocalJSX {
     }
     interface PageDashboard {
     }
+    interface PageFooter {
+    }
     interface PreviewTile {
         "bIsAverage"?: boolean;
         "small"?: string;
@@ -140,6 +151,7 @@ declare namespace LocalJSX {
         "filter-picker": FilterPicker;
         "job-list": JobList;
         "page-dashboard": PageDashboard;
+        "page-footer": PageFooter;
         "preview-tile": PreviewTile;
     }
 }
@@ -155,6 +167,7 @@ declare module "@stencil/core" {
             "filter-picker": LocalJSX.FilterPicker & JSXBase.HTMLAttributes<HTMLFilterPickerElement>;
             "job-list": LocalJSX.JobList & JSXBase.HTMLAttributes<HTMLJobListElement>;
             "page-dashboard": LocalJSX.PageDashboard & JSXBase.HTMLAttributes<HTMLPageDashboardElement>;
+            "page-footer": LocalJSX.PageFooter & JSXBase.HTMLAttributes<HTMLPageFooterElement>;
             "preview-tile": LocalJSX.PreviewTile & JSXBase.HTMLAttributes<HTMLPreviewTileElement>;
         }
     }

@@ -14,6 +14,7 @@ export class JobList {
     if (this.jobs?.length > 0) {
       return (
         <Host>
+          <h1 class="title">All jobs in the selected timeframe</h1>
           <table class="table">
             {this.renderHeader()}
             {this.jobs.map(job => this.renderJobListItem(job))}

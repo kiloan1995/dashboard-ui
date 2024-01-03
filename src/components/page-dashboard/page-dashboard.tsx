@@ -51,10 +51,12 @@ export class PageDashboard {
             <preview-tile title="18" small="New vs. changed" bIsAverage={false} />
           </div>
           <div class="chart-index-container">
+            <h1 class="title">All statuses in the selected timeframe over time</h1>
             <chart-index />
           </div>
           <job-list jobs={jobs} />
         </div>
+        <page-footer />
       </Host>
     );
   }

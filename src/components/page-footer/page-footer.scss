@@ -1,0 +1,24 @@
+@use '../../global/variables.scss';
+
+:host {
+  display: flex;
+  background-color: rgb(4, 107, 167, 1);
+  padding-top: 48px;
+  padding-bottom: 48px;
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 400;
+      font-family: variables.$font-family;
+      color: white;
+    }
+  }
+}

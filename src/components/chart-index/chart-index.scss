@@ -1,7 +1,11 @@
 @use '../../global/variables.scss';
 
 :host {
-  svg {
-    border: 1px solid variables.$gray-light1;
+  .svg-container {
+    display: flex;
   }
+  // svg {
+  //   border-top: 1px solid variables.$gray-light1;
+  //   border-bottom: 1px solid variables.$gray-light1;
+  // }
 }

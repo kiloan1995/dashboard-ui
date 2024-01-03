@@ -15,7 +15,7 @@ export class ChartIndex {
   render() {
     return (
       <Host>
-        <div ref={ref => (this.svgContainer = ref)}></div>
+        <div class="svg-container" ref={ref => (this.svgContainer = ref)}></div>
       </Host>
     );
   }
@@ -49,10 +49,12 @@ export class ChartIndex {
     ];
 
     const desiredHeight: number = 448;
+    const desiredWidth: number = 1440;
 
-    const padding: number = desiredHeight / 14;
-    const height: number = desiredHeight - padding * 2;
-    const width: number = height * 1.5;
+    const paddingHeight: number = desiredHeight / 14;
+    const paddingWidth: number = 0;
+    const height: number = desiredHeight - paddingHeight * 2;
+    const width: number = desiredWidth;
 
     // Axis
     const x = d3.scaleTime().range([0, width]);
@@ -62,10 +64,10 @@ export class ChartIndex {
     const svg = d3
       .select(this.svgContainer)
       .append('svg')
-      .attr('width', width + padding * 2)
-      .attr('height', height + padding * 2)
+      .attr('width', width + paddingWidth * 2)
+      .attr('height', height + paddingHeight * 2)
       .append('g')
-      .attr('transform', 'translate(' + padding + ',' + padding + ')');
+      .attr('transform', 'translate(' + paddingHeight + ',' + paddingHeight + ')');
 
     // define Axis domains
     jsonData.forEach((set: IDataSetDate) => {
