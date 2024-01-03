@@ -28,7 +28,17 @@
       }
     }
 
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: variables.$font-family;
+      color: variables.$gray-dark2;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+
     .chart-index-container {
+      background-color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -40,8 +50,9 @@
         font-size: 24px;
         font-weight: 700;
         font-family: variables.$font-family;
-        fill: variables.$gray-dark2;
+        color: variables.$gray-dark2;
         align-self: center;
+        padding-top: 24px;
         padding-bottom: 24px;
       }
     }
