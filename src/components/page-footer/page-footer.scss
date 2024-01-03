@@ -2,7 +2,7 @@
 
 :host {
   display: flex;
-  background-color: rgb(4, 107, 167, 1);
+  background-color: variables.$main-color-blue-1;
   padding-top: 48px;
   padding-bottom: 48px;
   .grid {

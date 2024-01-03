@@ -1,13 +1,7 @@
 @use '../../global/variables.scss';
 
 :host {
-  --color1: rgb(4, 107, 167, 1);
-  --color2: rgb(1, 200, 240, 1);
-
-  --color1hover: rgb(4, 107, 167, 0.5);
-  --color2hover: rgb(1, 200, 240, 0.5);
-
-  background: linear-gradient(90deg, var(--color1) 0%, var(--color2) 100%);
+  background: linear-gradient(90deg, variables.$main-color-blue-1 0%, variables.$main-color-blue-2 100%);
   padding: 40px 88px;
   border-radius: 8px;
   // x, y, blur, radius
@@ -32,5 +26,5 @@
 }
 
 :host(:hover) {
-  background: linear-gradient(90deg, var(--color1hover) 0%, var(--color2hover) 100%);
+  background: linear-gradient(90deg, variables.$main-color-blue-1-hover 0%, variables.$main-color-blue-2-hover 100%);
 }
