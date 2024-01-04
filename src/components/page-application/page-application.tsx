@@ -28,8 +28,8 @@ export class PageApplication {
     let stats: ApplicationStats = { timeStats: timeStats, hasReachedFinalStatus: false, closedDate: new Date() };
 
     let status1: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_REJECTED, statusNameInSF: 'some status in sf' };
-    let status2: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_REJECTED, statusNameInSF: 'some status in sf2' };
-    let status3: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_REJECTED, statusNameInSF: 'some status in sf3' };
+    let status2: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_APPLIED, statusNameInSF: 'some status in sf2' };
+    let status3: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_HIRED, statusNameInSF: 'some status in sf3' };
     let status: ApplicationStatus[] = [status1, status2, status3];
 
     this.application = { candidateName: 'kilian gfl', id: '16843', jobId: '68765', jobTitle: 'test title', stats: stats, statusArr: status };

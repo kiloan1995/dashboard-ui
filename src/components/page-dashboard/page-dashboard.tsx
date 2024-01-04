@@ -46,7 +46,7 @@ export class PageDashboard {
       <Host>
         <page-header breadcrumbs={breadcrumbs} />
         <div class="page-container">
-          <page-summary />
+          <summary-view />
           <div class="chart-index-container">
             <h1 class="title">All statuses over time</h1>
             <chart-index />

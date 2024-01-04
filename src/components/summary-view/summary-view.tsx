@@ -1,10 +1,10 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 @Component({
-  tag: 'page-summary',
-  styleUrl: 'page-summary.scss',
+  tag: 'summary-view',
+  styleUrl: 'summary-view.scss',
   shadow: true,
 })
-export class PageSummary {
+export class SummaryView {
   @Prop() color: string = '';
 
   render() {

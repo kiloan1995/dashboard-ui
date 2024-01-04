@@ -39,7 +39,7 @@ export class PageJob {
       <Host>
         <page-header breadcrumbs={this.breadcrumbs} />
         <div class="page-container">
-          <page-summary color="green" />
+          <summary-view color="green" />
           <list-view
             items={apps}
             fillTablePredicate={this.getApplicationData}
