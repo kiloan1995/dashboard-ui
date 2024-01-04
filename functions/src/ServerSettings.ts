@@ -1,3 +1,5 @@
 export class ServerSettings {
-  static serverRegion: string = 'europe-west1';
+  // https://firebase.google.com/docs/functions/locations?hl=de
+  // static serverRegion: string = 'europe-west3';
+  static serverRegion: string = 'us-central1';
 }
