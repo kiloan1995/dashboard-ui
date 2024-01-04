@@ -26,7 +26,10 @@ export namespace Components {
     }
     interface JobList {
         "columnNames": string[];
+        "fillTablePredicate"?: (item: any) => string[];
         "jobs": Job[];
+    }
+    interface PageApplication {
     }
     interface PageBreadcrumbs {
         "breadcrumbs": { label: string; url: string }[];
@@ -36,6 +39,8 @@ export namespace Components {
     interface PageFooter {
     }
     interface PageHeader {
+    }
+    interface PageJob {
     }
     interface PageSummary {
     }
@@ -88,6 +93,12 @@ declare global {
         prototype: HTMLJobListElement;
         new (): HTMLJobListElement;
     };
+    interface HTMLPageApplicationElement extends Components.PageApplication, HTMLStencilElement {
+    }
+    var HTMLPageApplicationElement: {
+        prototype: HTMLPageApplicationElement;
+        new (): HTMLPageApplicationElement;
+    };
     interface HTMLPageBreadcrumbsElement extends Components.PageBreadcrumbs, HTMLStencilElement {
     }
     var HTMLPageBreadcrumbsElement: {
@@ -112,6 +123,12 @@ declare global {
         prototype: HTMLPageHeaderElement;
         new (): HTMLPageHeaderElement;
     };
+    interface HTMLPageJobElement extends Components.PageJob, HTMLStencilElement {
+    }
+    var HTMLPageJobElement: {
+        prototype: HTMLPageJobElement;
+        new (): HTMLPageJobElement;
+    };
     interface HTMLPageSummaryElement extends Components.PageSummary, HTMLStencilElement {
     }
     var HTMLPageSummaryElement: {
@@ -132,10 +149,12 @@ declare global {
         "chart-pie": HTMLChartPieElement;
         "filter-picker": HTMLFilterPickerElement;
         "job-list": HTMLJobListElement;
+        "page-application": HTMLPageApplicationElement;
         "page-breadcrumbs": HTMLPageBreadcrumbsElement;
         "page-dashboard": HTMLPageDashboardElement;
         "page-footer": HTMLPageFooterElement;
         "page-header": HTMLPageHeaderElement;
+        "page-job": HTMLPageJobElement;
         "page-summary": HTMLPageSummaryElement;
         "preview-tile": HTMLPreviewTileElement;
     }
@@ -159,7 +178,10 @@ declare namespace LocalJSX {
     }
     interface JobList {
         "columnNames"?: string[];
+        "fillTablePredicate"?: (item: any) => string[];
         "jobs"?: Job[];
+    }
+    interface PageApplication {
     }
     interface PageBreadcrumbs {
         "breadcrumbs"?: { label: string; url: string }[];
@@ -169,6 +191,8 @@ declare namespace LocalJSX {
     interface PageFooter {
     }
     interface PageHeader {
+    }
+    interface PageJob {
     }
     interface PageSummary {
     }
@@ -185,10 +209,12 @@ declare namespace LocalJSX {
         "chart-pie": ChartPie;
         "filter-picker": FilterPicker;
         "job-list": JobList;
+        "page-application": PageApplication;
         "page-breadcrumbs": PageBreadcrumbs;
         "page-dashboard": PageDashboard;
         "page-footer": PageFooter;
         "page-header": PageHeader;
+        "page-job": PageJob;
         "page-summary": PageSummary;
         "preview-tile": PreviewTile;
     }
@@ -204,10 +230,12 @@ declare module "@stencil/core" {
             "chart-pie": LocalJSX.ChartPie & JSXBase.HTMLAttributes<HTMLChartPieElement>;
             "filter-picker": LocalJSX.FilterPicker & JSXBase.HTMLAttributes<HTMLFilterPickerElement>;
             "job-list": LocalJSX.JobList & JSXBase.HTMLAttributes<HTMLJobListElement>;
+            "page-application": LocalJSX.PageApplication & JSXBase.HTMLAttributes<HTMLPageApplicationElement>;
             "page-breadcrumbs": LocalJSX.PageBreadcrumbs & JSXBase.HTMLAttributes<HTMLPageBreadcrumbsElement>;
             "page-dashboard": LocalJSX.PageDashboard & JSXBase.HTMLAttributes<HTMLPageDashboardElement>;
             "page-footer": LocalJSX.PageFooter & JSXBase.HTMLAttributes<HTMLPageFooterElement>;
             "page-header": LocalJSX.PageHeader & JSXBase.HTMLAttributes<HTMLPageHeaderElement>;
+            "page-job": LocalJSX.PageJob & JSXBase.HTMLAttributes<HTMLPageJobElement>;
             "page-summary": LocalJSX.PageSummary & JSXBase.HTMLAttributes<HTMLPageSummaryElement>;
             "preview-tile": LocalJSX.PreviewTile & JSXBase.HTMLAttributes<HTMLPreviewTileElement>;
         }

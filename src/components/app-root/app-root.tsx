@@ -1,5 +1,5 @@
 import { Component, Host, h } from '@stencil/core';
-// import { Router } from '@vaadin/router';
+import { Router } from '@vaadin/router';
 import fetch from 'node-fetch';
 @Component({
   tag: 'app-root',
@@ -7,20 +7,23 @@ import fetch from 'node-fetch';
   shadow: true,
 })
 export class AppRoot {
-  // mainRef: HTMLDivElement;
+  mainRef: HTMLDivElement;
 
   componentDidLoad() {
     this.test();
-    // const router: Router = new Router(this.mainRef);
-    // router.setRoutes([{ path: '/', component: 'chart-page' }]);
+    const router: Router = new Router(this.mainRef);
+    router.setRoutes([
+      { path: '/', component: 'page-dashboard' },
+      { path: '/job', component: 'page-job' },
+      { path: '/job/application', component: 'page-application' },
+    ]);
+    // router.setRoutes([{ path: '/job', component: 'page-job' }]);
   }
 
   render() {
     return (
       <Host>
-        {/* <chart-page></chart-page> */}
-        <page-dashboard></page-dashboard>
-        {/* <div ref={ref => (this.mainRef = ref)}></div> */}
+        <div ref={ref => (this.mainRef = ref)}></div>
       </Host>
     );
   }

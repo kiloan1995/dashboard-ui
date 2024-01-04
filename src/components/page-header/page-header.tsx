@@ -17,7 +17,13 @@ export class PageHeader {
     return (
       <Host class={{ 'throw-shadow': this.scollY != 0 }}>
         <div class="bar">
-          <page-breadcrumbs breadcrumbs={[{ label: 'Dashboard', url: '#' }, { label: 'Job', url: '#' }]}></page-breadcrumbs>
+          <page-breadcrumbs
+            breadcrumbs={[
+              { label: 'Dashboard', url: '/' },
+              { label: 'Job', url: '/job' },
+              { label: 'Application', url: '/job/application' },
+            ]}
+          ></page-breadcrumbs>
           <div class="filter-container">
             <div class="filter-name">Interval from...</div>
             <filter-picker />

@@ -9,6 +9,7 @@ import { Job } from '../../../functions/src/models/Job';
 export class JobList {
   @Prop() jobs: Job[] = [];
   @Prop() columnNames: string[] = ['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected'];
+  @Prop() fillTablePredicate?: (item: any) => string[];
 
   render() {
     if (this.jobs?.length > 0) {
@@ -44,14 +45,18 @@ export class JobList {
   }
 
   renderJobListItem(job: Job) {
+    let values: string[] = this.fillTablePredicate(job as any);
     if (!job) return;
     return (
       <tr class="row" onClick={event => this.onJobClicked(event, job)}>
-        <td class="cell">{job.jobId}</td>
+        {values.map(value => {
+          return <td class="cell">{value}</td>;
+        })}
+        {/* <td class="cell">{job.jobId}</td>
         <td class="cell">{job.jobTitle}</td>
         <td class="cell">{job.timeStats.timeFromAppliedToInterview}</td>
         <td class="cell">{job.timeStats.timeInterviewToHired}</td>
-        <td class="cell">{job.timeStats.timeInterviewToRejected}</td>
+        <td class="cell">{job.timeStats.timeInterviewToRejected}</td> */}
       </tr>
     );
   }

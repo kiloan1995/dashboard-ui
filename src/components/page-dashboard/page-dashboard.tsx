@@ -42,10 +42,24 @@ export class PageDashboard {
             <h1 class="title">All statuses over time</h1>
             <chart-index />
           </div>
-          <job-list jobs={jobs} />
+          <job-list jobs={jobs} fillTablePredicate={this.getJobData} columnNames={['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected']} />
         </div>
         <page-footer />
       </Host>
     );
+  }
+
+  getJobData(item: any): string[] {
+    let job = item as Job;
+    if (job) {
+      return [
+        job.jobId,
+        job.jobTitle,
+        job.timeStats.timeFromAppliedToInterview.toString(),
+        job.timeStats.timeInterviewToHired.toString(),
+        job.timeStats.timeInterviewToRejected.toString(),
+      ];
+    }
+    return [];
   }
 }
