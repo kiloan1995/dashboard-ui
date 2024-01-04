@@ -32,7 +32,7 @@ export class PageApplication {
     let status3: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_HIRED, statusNameInSF: 'some status in sf3' };
     let status: ApplicationStatus[] = [status1, status2, status3];
 
-    this.application = { candidateName: 'kilian gfl', id: '16843', jobId: '68765', jobTitle: 'test title', stats: stats, statusArr: status };
+    this.application = { candidateName: 'Kilian Glomb', id: '16843', jobId: '68765', jobTitle: 'Store Tech Employee', stats: stats, statusArr: status };
   }
 
   render() {
@@ -41,7 +41,11 @@ export class PageApplication {
         <page-header breadcrumbs={this.breadcrumbs} />
         <div class="page-container">
           <div class="status-container">
-            <h1 class="title">All Application Status</h1>
+            <h1 class="title">{this.application?.candidateName}</h1>
+            <chart-index />
+          </div>
+          <div class="status-container">
+            <h1 class="title">All status on {this.application?.jobTitle}</h1>
             <status-preview status={this.application?.statusArr} />
           </div>
           <div class="chart-pie-container">

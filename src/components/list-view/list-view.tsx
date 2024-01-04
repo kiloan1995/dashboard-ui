@@ -1,5 +1,5 @@
 import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
-
+import { IconHelper } from '../../global/IconHelper';
 
 @Component({
   tag: 'list-view',
@@ -37,9 +37,11 @@ export class ListView {
   }
 
   renderHeader() {
+    let columnNames = [...this.columnNames];
+    columnNames.push(''); // add empty column name for the svg icons.
     return (
       <tr class="header">
-        {this.columnNames.map(name => {
+        {columnNames.map(name => {
           return <th class="cell">{name}</th>;
         })}
       </tr>
@@ -54,6 +56,7 @@ export class ListView {
         {values.map(value => {
           return <td class="cell">{value}</td>;
         })}
+        <td class="cell">{IconHelper.icon('login', '#c7c9ca')}</td>
       </tr>
     );
   }

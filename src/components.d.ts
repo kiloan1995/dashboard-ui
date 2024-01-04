@@ -52,9 +52,6 @@ export namespace Components {
     interface PageJob {
         "job": Job;
     }
-    interface PageSummary {
-        "color": string;
-    }
     interface PreviewTile {
         "bIsAverage": boolean;
         "small": string;
@@ -62,6 +59,9 @@ export namespace Components {
     }
     interface StatusPreview {
         "status": ApplicationStatus[];
+    }
+    interface SummaryView {
+        "color": string;
     }
 }
 export interface ListViewCustomEvent<T> extends CustomEvent<T> {
@@ -147,12 +147,6 @@ declare global {
         prototype: HTMLPageJobElement;
         new (): HTMLPageJobElement;
     };
-    interface HTMLPageSummaryElement extends Components.PageSummary, HTMLStencilElement {
-    }
-    var HTMLPageSummaryElement: {
-        prototype: HTMLPageSummaryElement;
-        new (): HTMLPageSummaryElement;
-    };
     interface HTMLPreviewTileElement extends Components.PreviewTile, HTMLStencilElement {
     }
     var HTMLPreviewTileElement: {
@@ -164,6 +158,12 @@ declare global {
     var HTMLStatusPreviewElement: {
         prototype: HTMLStatusPreviewElement;
         new (): HTMLStatusPreviewElement;
+    };
+    interface HTMLSummaryViewElement extends Components.SummaryView, HTMLStencilElement {
+    }
+    var HTMLSummaryViewElement: {
+        prototype: HTMLSummaryViewElement;
+        new (): HTMLSummaryViewElement;
     };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
@@ -179,9 +179,9 @@ declare global {
         "page-footer": HTMLPageFooterElement;
         "page-header": HTMLPageHeaderElement;
         "page-job": HTMLPageJobElement;
-        "page-summary": HTMLPageSummaryElement;
         "preview-tile": HTMLPreviewTileElement;
         "status-preview": HTMLStatusPreviewElement;
+        "summary-view": HTMLSummaryViewElement;
     }
 }
 declare namespace LocalJSX {
@@ -226,9 +226,6 @@ declare namespace LocalJSX {
     interface PageJob {
         "job"?: Job;
     }
-    interface PageSummary {
-        "color"?: string;
-    }
     interface PreviewTile {
         "bIsAverage"?: boolean;
         "small"?: string;
@@ -236,6 +233,9 @@ declare namespace LocalJSX {
     }
     interface StatusPreview {
         "status"?: ApplicationStatus[];
+    }
+    interface SummaryView {
+        "color"?: string;
     }
     interface IntrinsicElements {
         "app-root": AppRoot;
@@ -251,9 +251,9 @@ declare namespace LocalJSX {
         "page-footer": PageFooter;
         "page-header": PageHeader;
         "page-job": PageJob;
-        "page-summary": PageSummary;
         "preview-tile": PreviewTile;
         "status-preview": StatusPreview;
+        "summary-view": SummaryView;
     }
 }
 export { LocalJSX as JSX };
@@ -273,9 +273,9 @@ declare module "@stencil/core" {
             "page-footer": LocalJSX.PageFooter & JSXBase.HTMLAttributes<HTMLPageFooterElement>;
             "page-header": LocalJSX.PageHeader & JSXBase.HTMLAttributes<HTMLPageHeaderElement>;
             "page-job": LocalJSX.PageJob & JSXBase.HTMLAttributes<HTMLPageJobElement>;
-            "page-summary": LocalJSX.PageSummary & JSXBase.HTMLAttributes<HTMLPageSummaryElement>;
             "preview-tile": LocalJSX.PreviewTile & JSXBase.HTMLAttributes<HTMLPreviewTileElement>;
             "status-preview": LocalJSX.StatusPreview & JSXBase.HTMLAttributes<HTMLStatusPreviewElement>;
+            "summary-view": LocalJSX.SummaryView & JSXBase.HTMLAttributes<HTMLSummaryViewElement>;
         }
     }
 }

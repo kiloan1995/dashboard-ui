@@ -44,6 +44,9 @@
         font-weight: 400;
         font-family: variables.$font-family;
         color: variables.$gray-dark2;
+        svg {
+          vertical-align: middle;
+        }
       }
       :first-child {
         border-left: none;
