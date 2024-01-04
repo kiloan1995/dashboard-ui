@@ -28,6 +28,8 @@ export class PageBreadcrumbs {
   }
 
   onClick(event: any, path: string) {
+    event.stopPropagation();
+    event.preventDefault();
     UrlHelper.navigateTo(path);
   }
 }

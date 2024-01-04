@@ -1,6 +1,7 @@
 import { Component, Host, h } from '@stencil/core';
 import { Router } from '@vaadin/router';
 import fetch from 'node-fetch';
+import { ServerSettings } from '../../../functions/src/ServerSettings';
 @Component({
   tag: 'app-root',
   styleUrl: 'app-root.scss',
@@ -42,7 +43,7 @@ export class AppRoot {
       body: raw,
       redirect: 'follow',
     };
-    const url = 'http://127.0.0.1:5001/dashboardui-rs/us-central1/onApplicationUpdated';
+    const url = 'http://127.0.0.1:5001/dashboardui-rs/' + ServerSettings.serverRegion + '/onApplicationUpdated';
     const response = await fetch(url, requestOptions);
     let text = null;
     try {

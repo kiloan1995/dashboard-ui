@@ -33,8 +33,8 @@ export namespace Components {
     interface ListView {
         "columnNames": string[];
         "fillTablePredicate"?: (item: any) => string[];
+        "heading": string;
         "items": any[];
-        "title": string;
     }
     interface PageApplication {
         "application": Application;
@@ -206,9 +206,9 @@ declare namespace LocalJSX {
     interface ListView {
         "columnNames"?: string[];
         "fillTablePredicate"?: (item: any) => string[];
+        "heading"?: string;
         "items"?: any[];
         "onItemClicked"?: (event: ListViewCustomEvent<any>) => void;
-        "title"?: string;
     }
     interface PageApplication {
         "application"?: Application;

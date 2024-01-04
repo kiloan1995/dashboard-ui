@@ -8,7 +8,7 @@ import { IconHelper } from '../../global/IconHelper';
 })
 export class ListView {
   @Prop() items: any[] = [];
-  @Prop() title: string = 'All jobs';
+  @Prop() heading: string = 'All jobs';
   @Prop() columnNames: string[] = ['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected'];
   @Prop() fillTablePredicate?: (item: any) => string[];
   @Event() itemClicked: EventEmitter<any>;
@@ -17,7 +17,7 @@ export class ListView {
     if (this.items?.length > 0) {
       return (
         <Host>
-          <h1 class="title">{this.title}</h1>
+          <h1 class="title">{this.heading}</h1>
           <table class="table">
             {this.renderHeader()}
             {this.items.map(item => this.renderListItem(item))}

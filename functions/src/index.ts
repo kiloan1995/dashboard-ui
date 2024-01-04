@@ -7,6 +7,7 @@ import { StatMgr } from './models/StatMgr';
 import { Customer } from './models/Customer';
 import { ApplicationTimeStat } from './models/Stats';
 import * as logger from 'firebase-functions/logger';
+import { ServerSettings } from './ServerSettings';
 /**
  * Import function triggers from their respective submodules: *
  * import {onDocumentWritten} from "firebase-functions/v2/firestore"; *
@@ -17,9 +18,8 @@ admin.initializeApp();
 admin.firestore().settings({
   ignoreUndefinedProperties: true,
 });
-const serverRegion = 'europe-west3';
 
-export const onWorkerInit = onCall({ timeoutSeconds: 300, region: serverRegion }, async request => {
+export const onWorkerInit = onCall({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async request => {
   let service = new CustomerService();
   let customerList = await service.getCustomerList();
 
@@ -51,7 +51,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: serverRegion }
   return appList;
 });
 
-export const onApplicationUpdated = onDocumentWritten({ region: serverRegion, document: 'customers/{customer}/applications/{appId}' }, async request => {
+export const onApplicationUpdated = onDocumentWritten({ region: ServerSettings.serverRegion, document: 'customers/{customer}/applications/{appId}' }, async request => {
   let app: Application = request?.data?.after.data() as Application;
   if (!app) return;
 
