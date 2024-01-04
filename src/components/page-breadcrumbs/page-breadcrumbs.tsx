@@ -1,6 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { Breadcrumb } from '../../global/Breadcrumb';
-import { FunctionLibrary } from '../../global/FunctionLibrary';
+import { UrlHelper } from '../../global/UrlHelper';
 
 @Component({
   tag: 'page-breadcrumbs',
@@ -28,6 +28,6 @@ export class PageBreadcrumbs {
   }
 
   onClick(event: any, path: string) {
-    FunctionLibrary.navigateTo(path);
+    UrlHelper.navigateTo(path);
   }
 }

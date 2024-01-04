@@ -4,6 +4,7 @@ import { ApplicationTimeStat } from '../../../functions/src/models/Stats';
 import { FunctionLibrary } from '../../global/FunctionLibrary';
 import { Job } from '../../../functions/src/models/Job';
 import { Breadcrumb } from '../../global/Breadcrumb';
+import { UrlHelper } from '../../global/UrlHelper';
 
 @Component({
   tag: 'page-job',
@@ -19,7 +20,7 @@ export class PageJob {
   ];
 
   componentWillLoad() {
-    FunctionLibrary.removeUrlParam('applicationId');
+    UrlHelper.removeUrlParam('applicationId');
     let params = new URLSearchParams(document.location.search);
     let jobId = params.get('jobId');
     this.breadcrumbs[1].label = 'Job ' + jobId;
@@ -75,8 +76,8 @@ export class PageJob {
     event.stopPropagation();
     let app: Application = event.detail as Application;
     if (app) {
-      FunctionLibrary.setUrlParam('applicationId', app.id);
-      FunctionLibrary.navigateTo('/job/application');
+      UrlHelper.setUrlParam('applicationId', app.id);
+      UrlHelper.navigateTo('/job/application');
     }
   }
 }

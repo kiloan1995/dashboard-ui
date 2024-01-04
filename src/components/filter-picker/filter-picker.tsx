@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { FunctionLibrary } from '../../global/FunctionLibrary';
+import { UrlHelper } from '../../global/UrlHelper';
 
 @Component({
   tag: 'filter-picker',
@@ -12,11 +13,11 @@ export class FilterPicker {
   inputRef: HTMLInputElement;
 
   componentWillLoad() {
-    let selDate = FunctionLibrary.getUrlParam(this.urlParamName);
+    let selDate = UrlHelper.getUrlParam(this.urlParamName);
     if (selDate) {
       this.date = FunctionLibrary.customDateToDate(selDate);
     } else {
-      FunctionLibrary.setUrlParam(this.urlParamName, FunctionLibrary.dateToStringBeautiful(new Date(), '-'));
+      UrlHelper.setUrlParam(this.urlParamName, FunctionLibrary.dateToStringBeautiful(new Date(), '-'));
     }
   }
 
@@ -36,6 +37,6 @@ export class FilterPicker {
     event.preventDefault();
     console.log(this.inputRef.value);
     let newDate = FunctionLibrary.htmlInputDateToCustomDate(this.inputRef.value);
-    FunctionLibrary.setUrlParam(this.urlParamName, newDate);
+    UrlHelper.setUrlParam(this.urlParamName, newDate);
   }
 }

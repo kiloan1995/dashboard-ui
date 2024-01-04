@@ -2,7 +2,7 @@ import { Component, Host, h } from '@stencil/core';
 import { Job } from '../../../functions/src/models/Job';
 import { ApplicationTimeStat } from '../../../functions/src/models/Stats';
 import { Breadcrumb } from '../../global/Breadcrumb';
-import { FunctionLibrary } from '../../global/FunctionLibrary';
+import { UrlHelper } from '../../global/UrlHelper';
 
 @Component({
   tag: 'page-dashboard',
@@ -11,8 +11,8 @@ import { FunctionLibrary } from '../../global/FunctionLibrary';
 })
 export class PageDashboard {
   componentWillLoad() {
-    FunctionLibrary.removeUrlParam('applicationId');
-    FunctionLibrary.removeUrlParam('jobId');
+    UrlHelper.removeUrlParam('applicationId');
+    UrlHelper.removeUrlParam('jobId');
   }
 
   render() {
@@ -83,8 +83,8 @@ export class PageDashboard {
     let job: Job = event.detail as Job;
 
     if (job) {
-      FunctionLibrary.setUrlParam('jobId', job.jobId);
-      FunctionLibrary.navigateTo('/job');
+      UrlHelper.setUrlParam('jobId', job.jobId);
+      UrlHelper.navigateTo('/job');
     }
   }
 }
