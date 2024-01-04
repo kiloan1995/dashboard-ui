@@ -1,6 +1,7 @@
 import { Component, Host, h } from '@stencil/core';
 import { Job } from '../../../functions/src/models/Job';
 import { ApplicationTimeStat } from '../../../functions/src/models/Stats';
+import { Breadcrumb } from '../../global/Breadcrumb';
 
 @Component({
   tag: 'page-dashboard',
@@ -33,16 +34,23 @@ export class PageDashboard {
     };
 
     let jobs: Job[] = [job1, job2, job3];
+
+    let breadcrumbs: Breadcrumb[] = [{ label: 'Dashboard', url: '/' }];
     return (
       <Host>
-        <page-header />
+        <page-header breadcrumbs={breadcrumbs} />
         <div class="page-container">
           <page-summary />
           <div class="chart-index-container">
             <h1 class="title">All statuses over time</h1>
             <chart-index />
           </div>
-          <job-list jobs={jobs} fillTablePredicate={this.getJobData} columnNames={['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected']} />
+          <list-view
+            items={jobs}
+            fillTablePredicate={this.getJobData}
+            columnNames={['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected']}
+            onItemClicked={event => this.onListItemClicked(event)}
+          />
         </div>
         <page-footer />
       </Host>
@@ -61,5 +69,12 @@ export class PageDashboard {
       ];
     }
     return [];
+  }
+
+  onListItemClicked(event: any) {
+    event.preventDefault();
+    event.stopPropagation();
+    let job: Job = event.detail as Job;
+    if (job) window.location.href = '/job?jobId=' + job.jobId;
   }
 }

@@ -1,4 +1,5 @@
 import { Component, Host, h } from '@stencil/core';
+import { FunctionLibrary } from '../../global/FunctionLibrary';
 
 @Component({
   tag: 'filter-picker',
@@ -8,19 +9,12 @@ import { Component, Host, h } from '@stencil/core';
 export class FilterPicker {
   render() {
     const date = new Date();
-    let maxDate: string = date.getFullYear() + '-' + addLeadingZeroes(date.getUTCMonth() + 1, 2) + '-' + addLeadingZeroes(date.getDay(), 2);
-    let minDate: string = date.getFullYear() - 4 + '-' + addLeadingZeroes(date.getUTCMonth() + 1, 2) + '-' + addLeadingZeroes(date.getDay(), 2);
+    let maxDate: string = date.getFullYear() + '-' + FunctionLibrary.addLeadingZeroes(date.getUTCMonth() + 1, 2) + '-' + FunctionLibrary.addLeadingZeroes(date.getDay(), 2);
+    let minDate: string = date.getFullYear() - 4 + '-' + FunctionLibrary.addLeadingZeroes(date.getUTCMonth() + 1, 2) + '-' + FunctionLibrary.addLeadingZeroes(date.getDay(), 2);
     return (
       <Host>
         <input type="date" id="start" value={maxDate} min={minDate} max={maxDate} />
       </Host>
     );
   }
-}
-function addLeadingZeroes(num: number, numberOfDigits: number): string {
-  let result: string = num.toString();
-  while (result.length < numberOfDigits) {
-    result = '0' + result;
-  }
-  return result;
 }

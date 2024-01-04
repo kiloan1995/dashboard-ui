@@ -1,4 +1,5 @@
-import { Component, Host, h, Listen, State } from '@stencil/core';
+import { Component, Host, h, Listen, State, Prop } from '@stencil/core';
+import { Breadcrumb } from '../../global/Breadcrumb';
 
 @Component({
   tag: 'page-header',
@@ -6,6 +7,8 @@ import { Component, Host, h, Listen, State } from '@stencil/core';
   shadow: true,
 })
 export class PageHeader {
+  @Prop() breadcrumbs: Breadcrumb[] = [];
+
   @State() scollY: number = 0;
 
   @Listen('scroll', { target: 'window' })
@@ -17,13 +20,7 @@ export class PageHeader {
     return (
       <Host class={{ 'throw-shadow': this.scollY != 0 }}>
         <div class="bar">
-          <page-breadcrumbs
-            breadcrumbs={[
-              { label: 'Dashboard', url: '/' },
-              { label: 'Job', url: '/job' },
-              { label: 'Application', url: '/job/application' },
-            ]}
-          ></page-breadcrumbs>
+          <page-breadcrumbs breadcrumbs={this.breadcrumbs}></page-breadcrumbs>
           <div class="filter-container">
             <div class="filter-name">Interval from...</div>
             <filter-picker />

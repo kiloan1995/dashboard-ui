@@ -28,3 +28,19 @@
 :host(:hover) {
   background: linear-gradient(90deg, variables.$main-color-blue-1-hover 0%, variables.$main-color-blue-2-hover 100%);
 }
+
+:host(.green) {
+  background: linear-gradient(90deg, variables.$main-color-green-1 0%, variables.$main-color-green-2 100%);
+}
+
+:host(.green :hover) {
+  background: linear-gradient(90deg, variables.$main-color-green-1-hover 0%, variables.$main-color-green-2-hover 100%);
+}
+
+:host(.red) {
+  background: linear-gradient(90deg, variables.$main-color-green-1 0%, variables.$main-color-green-2 100%);
+}
+
+:host(.red :hover) {
+  background: linear-gradient(90deg, variables.$main-color-green-1-hover 0%, variables.$main-color-green-2-hover 100%);
+}

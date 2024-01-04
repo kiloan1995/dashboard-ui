@@ -22,3 +22,11 @@
     }
   }
 }
+
+:host(.red) {
+  background-color: variables.$main-color-red-1;
+}
+
+:host(.green) {
+  background-color: variables.$main-color-green-1;
+}

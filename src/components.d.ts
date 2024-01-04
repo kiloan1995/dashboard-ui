@@ -5,7 +5,9 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Breadcrumb } from "./global/Breadcrumb";
 import { Job } from "../functions/src/models/Job";
+export { Breadcrumb } from "./global/Breadcrumb";
 export { Job } from "../functions/src/models/Job";
 export namespace Components {
     interface AppRoot {
@@ -24,31 +26,39 @@ export namespace Components {
     }
     interface FilterPicker {
     }
-    interface JobList {
+    interface ListView {
         "columnNames": string[];
         "fillTablePredicate"?: (item: any) => string[];
-        "jobs": Job[];
+        "items": any[];
+        "title": string;
     }
     interface PageApplication {
     }
     interface PageBreadcrumbs {
-        "breadcrumbs": { label: string; url: string }[];
+        "breadcrumbs": Breadcrumb[];
     }
     interface PageDashboard {
     }
     interface PageFooter {
     }
     interface PageHeader {
+        "breadcrumbs": Breadcrumb[];
     }
     interface PageJob {
+        "job": Job;
     }
     interface PageSummary {
+        "color": string;
     }
     interface PreviewTile {
         "bIsAverage": boolean;
         "small": string;
         "title": string;
     }
+}
+export interface ListViewCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLListViewElement;
 }
 declare global {
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
@@ -87,11 +97,11 @@ declare global {
         prototype: HTMLFilterPickerElement;
         new (): HTMLFilterPickerElement;
     };
-    interface HTMLJobListElement extends Components.JobList, HTMLStencilElement {
+    interface HTMLListViewElement extends Components.ListView, HTMLStencilElement {
     }
-    var HTMLJobListElement: {
-        prototype: HTMLJobListElement;
-        new (): HTMLJobListElement;
+    var HTMLListViewElement: {
+        prototype: HTMLListViewElement;
+        new (): HTMLListViewElement;
     };
     interface HTMLPageApplicationElement extends Components.PageApplication, HTMLStencilElement {
     }
@@ -148,7 +158,7 @@ declare global {
         "chart-page": HTMLChartPageElement;
         "chart-pie": HTMLChartPieElement;
         "filter-picker": HTMLFilterPickerElement;
-        "job-list": HTMLJobListElement;
+        "list-view": HTMLListViewElement;
         "page-application": HTMLPageApplicationElement;
         "page-breadcrumbs": HTMLPageBreadcrumbsElement;
         "page-dashboard": HTMLPageDashboardElement;
@@ -176,25 +186,30 @@ declare namespace LocalJSX {
     }
     interface FilterPicker {
     }
-    interface JobList {
+    interface ListView {
         "columnNames"?: string[];
         "fillTablePredicate"?: (item: any) => string[];
-        "jobs"?: Job[];
+        "items"?: any[];
+        "onItemClicked"?: (event: ListViewCustomEvent<any>) => void;
+        "title"?: string;
     }
     interface PageApplication {
     }
     interface PageBreadcrumbs {
-        "breadcrumbs"?: { label: string; url: string }[];
+        "breadcrumbs"?: Breadcrumb[];
     }
     interface PageDashboard {
     }
     interface PageFooter {
     }
     interface PageHeader {
+        "breadcrumbs"?: Breadcrumb[];
     }
     interface PageJob {
+        "job"?: Job;
     }
     interface PageSummary {
+        "color"?: string;
     }
     interface PreviewTile {
         "bIsAverage"?: boolean;
@@ -208,7 +223,7 @@ declare namespace LocalJSX {
         "chart-page": ChartPage;
         "chart-pie": ChartPie;
         "filter-picker": FilterPicker;
-        "job-list": JobList;
+        "list-view": ListView;
         "page-application": PageApplication;
         "page-breadcrumbs": PageBreadcrumbs;
         "page-dashboard": PageDashboard;
@@ -229,7 +244,7 @@ declare module "@stencil/core" {
             "chart-page": LocalJSX.ChartPage & JSXBase.HTMLAttributes<HTMLChartPageElement>;
             "chart-pie": LocalJSX.ChartPie & JSXBase.HTMLAttributes<HTMLChartPieElement>;
             "filter-picker": LocalJSX.FilterPicker & JSXBase.HTMLAttributes<HTMLFilterPickerElement>;
-            "job-list": LocalJSX.JobList & JSXBase.HTMLAttributes<HTMLJobListElement>;
+            "list-view": LocalJSX.ListView & JSXBase.HTMLAttributes<HTMLListViewElement>;
             "page-application": LocalJSX.PageApplication & JSXBase.HTMLAttributes<HTMLPageApplicationElement>;
             "page-breadcrumbs": LocalJSX.PageBreadcrumbs & JSXBase.HTMLAttributes<HTMLPageBreadcrumbsElement>;
             "page-dashboard": LocalJSX.PageDashboard & JSXBase.HTMLAttributes<HTMLPageDashboardElement>;

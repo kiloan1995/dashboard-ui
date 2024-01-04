@@ -1,4 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
+import { Breadcrumb } from '../../global/Breadcrumb';
 
 @Component({
   tag: 'page-breadcrumbs',
@@ -6,7 +7,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class PageBreadcrumbs {
-  @Prop() breadcrumbs: { label: string; url: string }[] = [];
+  @Prop() breadcrumbs: Breadcrumb[] = [];
 
   render() {
     return (

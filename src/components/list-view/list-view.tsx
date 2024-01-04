@@ -1,24 +1,25 @@
-import { Component, Host, h, Prop } from '@stencil/core';
-import { Job } from '../../../functions/src/models/Job';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
-  tag: 'job-list',
-  styleUrl: 'job-list.scss',
+  tag: 'list-view',
+  styleUrl: 'list-view.scss',
   shadow: true,
 })
-export class JobList {
-  @Prop() jobs: Job[] = [];
+export class ListView {
+  @Prop() items: any[] = [];
+  @Prop() title: string = 'All jobs';
   @Prop() columnNames: string[] = ['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected'];
   @Prop() fillTablePredicate?: (item: any) => string[];
+  @Event() itemClicked: EventEmitter<any>;
 
   render() {
-    if (this.jobs?.length > 0) {
+    if (this.items?.length > 0) {
       return (
         <Host>
-          <h1 class="title">All jobs</h1>
+          <h1 class="title">{this.title}</h1>
           <table class="table">
             {this.renderHeader()}
-            {this.jobs.map(job => this.renderJobListItem(job))}
+            {this.items.map(item => this.renderListItem(item))}
           </table>
         </Host>
       );
@@ -44,25 +45,21 @@ export class JobList {
     );
   }
 
-  renderJobListItem(job: Job) {
-    let values: string[] = this.fillTablePredicate(job as any);
-    if (!job) return;
+  renderListItem(item: any) {
+    let values: string[] = this.fillTablePredicate(item);
+    if (!values) return;
     return (
-      <tr class="row" onClick={event => this.onJobClicked(event, job)}>
+      <tr class="row" onClick={event => this.onClick(event, item)}>
         {values.map(value => {
           return <td class="cell">{value}</td>;
         })}
-        {/* <td class="cell">{job.jobId}</td>
-        <td class="cell">{job.jobTitle}</td>
-        <td class="cell">{job.timeStats.timeFromAppliedToInterview}</td>
-        <td class="cell">{job.timeStats.timeInterviewToHired}</td>
-        <td class="cell">{job.timeStats.timeInterviewToRejected}</td> */}
       </tr>
     );
   }
 
-  onJobClicked(event: any, job: Job) {
+  onClick(event: any, item: any) {
     event.preventDefault();
     event.stopPropagation();
+    this.itemClicked.emit(item);
   }
 }
