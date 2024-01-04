@@ -27,6 +27,7 @@ export namespace Components {
         "textTotal": string;
     }
     interface FilterPicker {
+        "date": Date;
         "urlParamName": string;
     }
     interface ListView {
@@ -199,6 +200,7 @@ declare namespace LocalJSX {
         "textTotal"?: string;
     }
     interface FilterPicker {
+        "date"?: Date;
         "urlParamName"?: string;
     }
     interface ListView {
