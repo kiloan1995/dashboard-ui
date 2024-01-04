@@ -5,8 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { Application } from "../functions/src/models/Application";
 import { Breadcrumb } from "./global/Breadcrumb";
 import { Job } from "../functions/src/models/Job";
+export { Application } from "../functions/src/models/Application";
 export { Breadcrumb } from "./global/Breadcrumb";
 export { Job } from "../functions/src/models/Job";
 export namespace Components {
@@ -34,6 +36,7 @@ export namespace Components {
         "title": string;
     }
     interface PageApplication {
+        "application": Application;
     }
     interface PageBreadcrumbs {
         "breadcrumbs": Breadcrumb[];
@@ -196,6 +199,7 @@ declare namespace LocalJSX {
         "title"?: string;
     }
     interface PageApplication {
+        "application"?: Application;
     }
     interface PageBreadcrumbs {
         "breadcrumbs"?: Breadcrumb[];

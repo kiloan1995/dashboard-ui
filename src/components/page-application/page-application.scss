@@ -1,4 +1,22 @@
 @use '../../global/variables.scss';
 
 :host {
+  .page-container {
+    max-width: 1440px;
+    // top left bottom right
+    margin: 0 auto 48px auto;
+    padding-top: 114px; // top = 66 (header-bar) + 48 (gap)
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    .chart-pie-container {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: 8px;
+      // x, y, blur, radius
+      box-shadow: variables.$box-shadow;
+    }
+  }
 }
