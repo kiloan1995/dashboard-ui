@@ -5,10 +5,10 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Application } from "../functions/src/models/Application";
+import { Application, ApplicationStatus } from "../functions/src/models/Application";
 import { Breadcrumb } from "./global/Breadcrumb";
 import { Job } from "../functions/src/models/Job";
-export { Application } from "../functions/src/models/Application";
+export { Application, ApplicationStatus } from "../functions/src/models/Application";
 export { Breadcrumb } from "./global/Breadcrumb";
 export { Job } from "../functions/src/models/Job";
 export namespace Components {
@@ -58,6 +58,9 @@ export namespace Components {
         "bIsAverage": boolean;
         "small": string;
         "title": string;
+    }
+    interface StatusPreview {
+        "status": ApplicationStatus[];
     }
 }
 export interface ListViewCustomEvent<T> extends CustomEvent<T> {
@@ -155,6 +158,12 @@ declare global {
         prototype: HTMLPreviewTileElement;
         new (): HTMLPreviewTileElement;
     };
+    interface HTMLStatusPreviewElement extends Components.StatusPreview, HTMLStencilElement {
+    }
+    var HTMLStatusPreviewElement: {
+        prototype: HTMLStatusPreviewElement;
+        new (): HTMLStatusPreviewElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "chart-histogram": HTMLChartHistogramElement;
@@ -171,6 +180,7 @@ declare global {
         "page-job": HTMLPageJobElement;
         "page-summary": HTMLPageSummaryElement;
         "preview-tile": HTMLPreviewTileElement;
+        "status-preview": HTMLStatusPreviewElement;
     }
 }
 declare namespace LocalJSX {
@@ -222,6 +232,9 @@ declare namespace LocalJSX {
         "small"?: string;
         "title"?: string;
     }
+    interface StatusPreview {
+        "status"?: ApplicationStatus[];
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "chart-histogram": ChartHistogram;
@@ -238,6 +251,7 @@ declare namespace LocalJSX {
         "page-job": PageJob;
         "page-summary": PageSummary;
         "preview-tile": PreviewTile;
+        "status-preview": StatusPreview;
     }
 }
 export { LocalJSX as JSX };
@@ -259,6 +273,7 @@ declare module "@stencil/core" {
             "page-job": LocalJSX.PageJob & JSXBase.HTMLAttributes<HTMLPageJobElement>;
             "page-summary": LocalJSX.PageSummary & JSXBase.HTMLAttributes<HTMLPageSummaryElement>;
             "preview-tile": LocalJSX.PreviewTile & JSXBase.HTMLAttributes<HTMLPreviewTileElement>;
+            "status-preview": LocalJSX.StatusPreview & JSXBase.HTMLAttributes<HTMLStatusPreviewElement>;
         }
     }
 }
