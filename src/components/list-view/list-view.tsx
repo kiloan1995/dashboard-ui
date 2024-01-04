@@ -52,7 +52,7 @@ export class ListView {
     let values: string[] = this.fillTablePredicate(item);
     if (!values) return;
     return (
-      <tr class="row" onClick={event => this.onClick(event, item)}>
+      <tr class="row" title="Click to open" onClick={event => this.onClick(event, item)}>
         {values.map(value => {
           return <td class="cell">{value}</td>;
         })}
