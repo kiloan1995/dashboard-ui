@@ -25,6 +25,7 @@ export namespace Components {
         "textTotal": string;
     }
     interface FilterPicker {
+        "urlParamName": string;
     }
     interface ListView {
         "columnNames": string[];
@@ -185,6 +186,7 @@ declare namespace LocalJSX {
         "textTotal"?: string;
     }
     interface FilterPicker {
+        "urlParamName"?: string;
     }
     interface ListView {
         "columnNames"?: string[];

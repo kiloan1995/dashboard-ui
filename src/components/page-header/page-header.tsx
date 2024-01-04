@@ -23,9 +23,9 @@ export class PageHeader {
           <page-breadcrumbs breadcrumbs={this.breadcrumbs}></page-breadcrumbs>
           <div class="filter-container">
             <div class="filter-name">Interval from...</div>
-            <filter-picker />
+            <filter-picker urlParamName="startDate" />
             <div class="filter-name">until</div>
-            <filter-picker />
+            <filter-picker urlParamName="endDate" />
           </div>
         </div>
       </Host>

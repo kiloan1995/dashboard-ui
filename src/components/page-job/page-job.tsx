@@ -19,9 +19,9 @@ export class PageJob {
   ];
 
   componentWillLoad() {
+    FunctionLibrary.removeUrlParam('applicationId');
     let params = new URLSearchParams(document.location.search);
     let jobId = params.get('jobId');
-    console.log('jobId=', jobId);
     this.breadcrumbs[1].label = 'Job ' + jobId;
   }
 
@@ -74,6 +74,9 @@ export class PageJob {
     event.preventDefault();
     event.stopPropagation();
     let app: Application = event.detail as Application;
-    if (app) window.location.href = '/job/application?jobId=' + app.jobId + '&applicationId=' + app.id;
+    if (app) {
+      FunctionLibrary.setUrlParam('applicationId', app.id);
+      FunctionLibrary.navigateTo('/job/application');
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 import { Breadcrumb } from '../../global/Breadcrumb';
+import { FunctionLibrary } from '../../global/FunctionLibrary';
 
 @Component({
   tag: 'page-breadcrumbs',
@@ -15,14 +16,18 @@ export class PageBreadcrumbs {
         {this.breadcrumbs.map((breadcrumb, i) => {
           return (
             <div class="link-container">
-              <a class={{ first: i == 0 }} href={breadcrumb.url}>
+              <button class={{ first: i == 0 }} onClick={event => this.onClick(event, breadcrumb.url)}>
                 {breadcrumb.label}
-              </a>
+              </button>
               {i + 1 < this.breadcrumbs.length && <div class="thingy">{'>'}</div>}
             </div>
           );
         })}
       </Host>
     );
+  }
+
+  onClick(event: any, path: string) {
+    FunctionLibrary.navigateTo(path);
   }
 }

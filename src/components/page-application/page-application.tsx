@@ -17,7 +17,6 @@ export class PageApplication {
     let jobId = params.get('jobId');
     let appId = params.get('applicationId');
     this.breadcrumbs[1].label = 'Job ' + jobId;
-    this.breadcrumbs[1].url = '/job?jobId=' + jobId;
     this.breadcrumbs[2].label = 'Application ' + appId;
   }
   render() {
