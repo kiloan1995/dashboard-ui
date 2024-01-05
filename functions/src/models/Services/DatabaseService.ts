@@ -41,7 +41,7 @@ export class DatabaseService {
     }
     return undefined;
   }
-  
+
   async getJob(customerName: string, jobId: string): Promise<Job | undefined> {
     let result = await admin.firestore().collection(`customers/${customerName}/jobs/`).where('jobId', '==', jobId).get();
 

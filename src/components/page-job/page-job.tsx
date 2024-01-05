@@ -21,31 +21,46 @@ export class PageJob {
     { label: 'Job', url: '/job' },
   ];
 
+  refStartDate: HTMLFilterPickerElement;
+  refEndDate: HTMLFilterPickerElement;
+
   async componentWillLoad() {
     UrlHelper.removeUrlParam('applicationId');
     let params = new URLSearchParams(document.location.search);
     let jobId = params.get('jobId');
     this.breadcrumbs[1].label = 'Job ' + jobId;
-    this.applications = await ApplicationService.getApplicationsAtJob('4864');
+    this.kickOffSearch(null);
   }
 
   render() {
     return (
       <Host>
-        <page-header breadcrumbs={this.breadcrumbs} />
+        <page-header breadcrumbs={this.breadcrumbs} onStartDateChanged={event => this.kickOffSearch(event)} onEndDateChanged={event => this.kickOffSearch(event)} />
         <div class="page-container">
           <summary-view color="green" />
           <list-view
             items={this.applications}
             heading={this.applications?.[0]?.jobTitle + ' (' + this.applications?.[0]?.jobId + ')'}
             fillTablePredicate={this.getApplicationData}
-            columnNames={['Id', 'CandiateName', 'Time till interview', 'Time till hired', 'Time till rejected', 'Has reached final status?', 'Statuscount', 'Closed Date']}
+            columnNames={['Id', 'Candidate Name', 'Time till interview', 'Time till hired', 'Time till rejected', 'Has reached final status?', 'Statuscount', 'Closed Date']}
             onItemClicked={event => this.onListItemClicked(event)}
           />
         </div>
         <page-footer class="green" />
       </Host>
     );
+  }
+
+  async kickOffSearch(event: any) {
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    let startDate: Date = FunctionLibrary.customDateToDate(UrlHelper.getUrlParam('startDate'));
+    let endDate: Date = FunctionLibrary.customDateToDate(UrlHelper.getUrlParam('endDate'));
+    console.log('check dates', startDate, endDate);
+    this.applications = await ApplicationService.getApplicationsAtJob('4864', startDate, endDate);
+    // this.applications = { ...this.applications };
   }
 
   getApplicationData(item: any): string[] {

@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 import { FunctionLibrary } from '../../global/FunctionLibrary';
 import { UrlHelper } from '../../global/UrlHelper';
 
@@ -9,7 +9,8 @@ import { UrlHelper } from '../../global/UrlHelper';
 })
 export class FilterPicker {
   @Prop() urlParamName: string = 'startDate';
-  @Prop() date: Date = new Date();
+  @Event() dateChanged: EventEmitter<Date>;
+  @State() date: Date = new Date();
   inputRef: HTMLInputElement;
 
   componentWillLoad() {
@@ -22,13 +23,13 @@ export class FilterPicker {
   }
 
   render() {
-    let maxDate: string =
-      this.date.getFullYear() + '-' + FunctionLibrary.addLeadingZeroes(this.date.getUTCMonth() + 1, 2) + '-' + FunctionLibrary.addLeadingZeroes(this.date.getDay(), 2);
-    let minDate: string =
-      this.date.getFullYear() - 4 + '-' + FunctionLibrary.addLeadingZeroes(this.date.getUTCMonth() + 1, 2) + '-' + FunctionLibrary.addLeadingZeroes(this.date.getDay(), 2);
+    let date: string =
+      this.date.getUTCFullYear() + '-' + FunctionLibrary.addLeadingZeroes(this.date.getUTCMonth() + 1, 2) + '-' + FunctionLibrary.addLeadingZeroes(this.date.getUTCDate(), 2);
+    let now: Date = new Date();
+    let maxDate: string = now.getUTCFullYear() + '-' + FunctionLibrary.addLeadingZeroes(now.getUTCMonth() + 1, 2) + '-' + FunctionLibrary.addLeadingZeroes(now.getUTCDate(), 2);
     return (
       <Host>
-        <input ref={ref => (this.inputRef = ref)} onChange={event => this.onChange(event)} type="date" id="start" value={maxDate} min={minDate} max={maxDate} />
+        <input ref={ref => (this.inputRef = ref)} onChange={event => this.onChange(event)} type="date" id="start" max={maxDate} value={date} />
       </Host>
     );
   }
@@ -38,5 +39,6 @@ export class FilterPicker {
     console.log(this.inputRef.value);
     let newDate = FunctionLibrary.htmlInputDateToCustomDate(this.inputRef.value);
     UrlHelper.setUrlParam(this.urlParamName, newDate);
+    this.dateChanged.emit(FunctionLibrary.customDateToDate(newDate));
   }
 }

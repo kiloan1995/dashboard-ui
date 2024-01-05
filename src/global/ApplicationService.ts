@@ -1,14 +1,23 @@
-import { Application } from '../../functions/src/models/Application';
+import { Application, ApplicationStatusType } from '../../functions/src/models/Application';
 import { ServerSettings } from '../../functions/src/ServerSettings';
 import fetch from 'node-fetch';
+import { FunctionLibrary } from './FunctionLibrary';
 
 export class ApplicationService {
   static async getApplication(appId: string): Promise<Application | undefined> {
     return (await this.doRequest('application/json', { applicationId: appId }, 'getApplication', 'application')) as Application;
   }
 
-  static async getApplicationsAtJob(jobId: string): Promise<Application[] | undefined> {
-    return (await this.doRequest('application/json', { jobId: jobId }, 'getAllApplicationsAtJob', 'applications')) as Application[];
+  static async getApplicationsAtJob(jobId: string, startDate: Date, endDate: Date): Promise<Application[] | undefined> {
+    let apps: Application[] = (await this.doRequest('application/json', { jobId: jobId }, 'getAllApplicationsAtJob', 'applications')) as Application[];
+    apps = apps.filter(app => {
+      if (app.stats.hasReachedFinalStatus) {
+        let closedDate = FunctionLibrary.timestampToDate(app.stats.closedDate);
+        return closedDate >= startDate && closedDate <= endDate;
+      }
+      return true;
+    });
+    return apps;
   }
 
   static async doRequest(contentType: string, data: any, functionName: string, key: string): Promise<any | null> {
@@ -31,5 +40,11 @@ export class ApplicationService {
       console.log('getApplications failed:', e);
     }
     return null;
+  }
+
+  static findStatus(app: Application, type: ApplicationStatusType) {
+    for (const status of app.statusArr) {
+      if (status.status == type) return status;
+    }
   }
 }

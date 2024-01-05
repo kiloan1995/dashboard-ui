@@ -27,7 +27,6 @@ export namespace Components {
         "textTotal": string;
     }
     interface FilterPicker {
-        "date": Date;
         "urlParamName": string;
     }
     interface ListView {
@@ -63,9 +62,17 @@ export namespace Components {
         "color": string;
     }
 }
+export interface FilterPickerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLFilterPickerElement;
+}
 export interface ListViewCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLListViewElement;
+}
+export interface PageHeaderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLPageHeaderElement;
 }
 declare global {
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
@@ -199,7 +206,7 @@ declare namespace LocalJSX {
         "textTotal"?: string;
     }
     interface FilterPicker {
-        "date"?: Date;
+        "onDateChanged"?: (event: FilterPickerCustomEvent<Date>) => void;
         "urlParamName"?: string;
     }
     interface ListView {
@@ -220,6 +227,8 @@ declare namespace LocalJSX {
     }
     interface PageHeader {
         "breadcrumbs"?: Breadcrumb[];
+        "onEndDateChanged"?: (event: PageHeaderCustomEvent<Date>) => void;
+        "onStartDateChanged"?: (event: PageHeaderCustomEvent<Date>) => void;
     }
     interface PageJob {
         "job"?: Job;
