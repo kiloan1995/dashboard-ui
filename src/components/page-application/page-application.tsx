@@ -3,7 +3,6 @@ import { Breadcrumb } from '../../global/Breadcrumb';
 import { Application } from '../../../functions/src/models/Application';
 import { ApplicationService } from '../../global/ApplicationService';
 
-
 @Component({
   tag: 'page-application',
   styleUrl: 'page-application.scss',
@@ -26,7 +25,6 @@ export class PageApplication {
     this.breadcrumbs[2].label = 'Application ' + appId;
 
     this.application = await ApplicationService.getApplication('No working yet');
-    console.log('kjhbsdfkjh<bsdf', this.application);
   }
 
   render() {
@@ -51,6 +49,4 @@ export class PageApplication {
       </Host>
     );
   }
-
-
 }

@@ -31,7 +31,7 @@ export class ApplicationService {
     return app;
   }
 
-  static async getApplicationsAtJob(jobId: string): Promise<Application | undefined> {
+  static async getApplicationsAtJob(jobId: string): Promise<Application[] | undefined> {
     var myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
     var raw = JSON.stringify({
@@ -45,16 +45,16 @@ export class ApplicationService {
     };
     const url = 'http://127.0.0.1:5001/dashboardui-rs/' + ServerSettings.serverRegion + '/getAllApplicationsAtJob';
     const response = await fetch(url, requestOptions);
-    let app: Application = undefined;
+    let apps: Application[] = undefined;
     try {
       let text = await response.text();
       console.log('getApplication Success:', text);
       let json = JSON.parse(text);
-      app = json['result'] as Application; //unwrap promise
-      console.log('getApplication Success:', app);
+      apps = json['result'] as Application[]; //unwrap promise
+      console.log('getApplication Success:', apps);
     } catch (e) {
       console.log('getApplication failed:', e);
     }
-    return app;
+    return apps;
   }
 }
