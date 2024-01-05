@@ -1,4 +1,4 @@
-import { onCall } from 'firebase-functions/v2/https';
+import { onCall, onRequest } from 'firebase-functions/v2/https';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import * as admin from 'firebase-admin';
 import { CustomerService } from './models/Services/CustomerService';
@@ -83,22 +83,20 @@ export const onApplicationUpdated = onDocumentWritten({ region: ServerSettings.s
   // job stats updaten.
 });
 
-export const getApplication = onCall({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async request => {
+export const getApplication = onRequest({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async (request, response) => {
   const customerName = 'mms-staging';
   const customerService = new CustomerService();
   const customer = await customerService.getCustomer(customerName);
   const dbHelper = new DatabaseService(customer);
-  let application = await dbHelper.getApplication(customerName, '10154');
-
-  return application;
+  let application = await dbHelper.getApplication(customerName, request.body?.applicationId);
+  response.json({ application });
 });
 
-export const getAllApplicationsAtJob = onCall({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async request => {
+export const getAllApplicationsAtJob = onRequest({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async (request, response) => {
   const customerName = 'mms-staging';
   const customerService = new CustomerService();
   const customer = await customerService.getCustomer(customerName);
   const dbHelper = new DatabaseService(customer);
-  let applications: Application[] = await dbHelper.getAllApplicationsAtJob(customerName, '4864');
-
-  return applications;
+  let applications: Application[] = await dbHelper.getAllApplicationsAtJob(customerName, request.body?.jobId);
+  response.json({ applications });
 });

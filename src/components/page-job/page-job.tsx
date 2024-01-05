@@ -26,7 +26,7 @@ export class PageJob {
     let params = new URLSearchParams(document.location.search);
     let jobId = params.get('jobId');
     this.breadcrumbs[1].label = 'Job ' + jobId;
-    this.applications = await ApplicationService.getApplicationsAtJob('test');
+    this.applications = await ApplicationService.getApplicationsAtJob('4864');
   }
 
   render() {
@@ -37,7 +37,7 @@ export class PageJob {
           <summary-view color="green" />
           <list-view
             items={this.applications}
-            heading={this.applications[0].jobTitle + ' (' + this.applications[0].jobId + ')'}
+            heading={this.applications?.[0]?.jobTitle + ' (' + this.applications?.[0]?.jobId + ')'}
             fillTablePredicate={this.getApplicationData}
             columnNames={['Id', 'CandiateName', 'Closed Date', 'Has reached final status?', 'Time till interview', 'Time till hired', 'Time till rejected']}
             onItemClicked={event => this.onListItemClicked(event)}

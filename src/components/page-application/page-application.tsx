@@ -24,7 +24,7 @@ export class PageApplication {
     this.breadcrumbs[1].label = 'Job ' + jobId;
     this.breadcrumbs[2].label = 'Application ' + appId;
 
-    this.application = await ApplicationService.getApplication('No working yet');
+    this.application = await ApplicationService.getApplication(appId);
   }
 
   render() {
