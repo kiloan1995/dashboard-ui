@@ -25,6 +25,11 @@
       gap: 12px;
       padding: 12px 0;
 
+      &.hidden {
+        pointer-events: none;
+        opacity: 0;
+      }
+
       .filter-name {
         font-size: 18px;
         font-weight: 400;

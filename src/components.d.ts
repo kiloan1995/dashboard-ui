@@ -46,6 +46,7 @@ export namespace Components {
     }
     interface PageHeader {
         "breadcrumbs": Breadcrumb[];
+        "hideDatePicker": boolean;
     }
     interface PageJob {
         "job": Job;
@@ -227,6 +228,7 @@ declare namespace LocalJSX {
     }
     interface PageHeader {
         "breadcrumbs"?: Breadcrumb[];
+        "hideDatePicker"?: boolean;
         "onEndDateChanged"?: (event: PageHeaderCustomEvent<Date>) => void;
         "onStartDateChanged"?: (event: PageHeaderCustomEvent<Date>) => void;
     }

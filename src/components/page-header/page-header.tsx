@@ -8,6 +8,7 @@ import { Breadcrumb } from '../../global/Breadcrumb';
 })
 export class PageHeader {
   @Prop() breadcrumbs: Breadcrumb[] = [];
+  @Prop() hideDatePicker: boolean = false;
   @Event() startDateChanged: EventEmitter<Date>;
   @Event() endDateChanged: EventEmitter<Date>;
 
@@ -23,7 +24,7 @@ export class PageHeader {
       <Host class={{ 'throw-shadow': this.scollY != 0 }}>
         <div class="bar">
           <page-breadcrumbs breadcrumbs={this.breadcrumbs}></page-breadcrumbs>
-          <div class="filter-container">
+          <div class={{ 'filter-container': true, 'hidden': this.hideDatePicker }}>
             <div class="filter-name">Interval from...</div>
             <filter-picker urlParamName="startDate" onDateChanged={event => this.onStartDateChange(event)} />
             <div class="filter-name">until</div>

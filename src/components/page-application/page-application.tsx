@@ -30,7 +30,7 @@ export class PageApplication {
   render() {
     return (
       <Host>
-        <page-header breadcrumbs={this.breadcrumbs} />
+        <page-header breadcrumbs={this.breadcrumbs} hideDatePicker={true} />
         <div class="page-container">
           <div class="status-container">
             <h1 class="title">{this.application?.candidateName}</h1>
