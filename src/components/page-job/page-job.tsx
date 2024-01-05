@@ -40,7 +40,7 @@ export class PageJob {
           <summary-view color="green" />
           <list-view
             items={this.applications}
-            heading={this.applications?.[0]?.jobTitle + ' (' + this.applications?.[0]?.jobId + ')'}
+            heading={this.applications?.[0]?.jobTitle + ' (jobID= ' + this.applications?.[0]?.jobId + ')'}
             fillTablePredicate={this.getApplicationData}
             columnNames={['Id', 'Candidate Name', 'Time till interview', 'Time till hired', 'Time till rejected', 'Has reached final status?', 'Statuscount', 'Closed Date']}
             onItemClicked={event => this.onListItemClicked(event)}
