@@ -39,7 +39,7 @@ export class PageJob {
             items={this.applications}
             heading={this.applications?.[0]?.jobTitle + ' (' + this.applications?.[0]?.jobId + ')'}
             fillTablePredicate={this.getApplicationData}
-            columnNames={['Id', 'CandiateName', 'Closed Date', 'Has reached final status?', 'Time till interview', 'Time till hired', 'Time till rejected']}
+            columnNames={['Id', 'CandiateName', 'Time till interview', 'Time till hired', 'Time till rejected', 'Has reached final status?', 'Statuscount', 'Closed Date']}
             onItemClicked={event => this.onListItemClicked(event)}
           />
         </div>
@@ -54,11 +54,12 @@ export class PageJob {
       return [
         app.id,
         app.candidateName,
-        FunctionLibrary.dateToStringBeautiful(FunctionLibrary.timestampToDate(app.stats.closedDate)),
-        app.stats.hasReachedFinalStatus.toString(),
         app.stats.timeStats.timeFromAppliedToInterview.toString(),
         app.stats.timeStats.timeInterviewToHired.toString(),
         app.stats.timeStats.timeInterviewToRejected.toString(),
+        app.stats.hasReachedFinalStatus.toString(),
+        app.statusArr.length.toString(),
+        FunctionLibrary.dateToStringBeautiful(FunctionLibrary.timestampToDate(app.stats.closedDate)),
       ];
     }
     return [];
