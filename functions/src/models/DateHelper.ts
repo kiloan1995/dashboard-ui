@@ -16,4 +16,10 @@ export class DateHelper {
     }
     return new Date();
   }
+
+  static timestampToDate(date: Date): Date {
+    let test = date as any as { _seconds: number; _nanoseconds: number };
+    let d = new Date(test._seconds * 1000);
+    return d;
+  }
 }

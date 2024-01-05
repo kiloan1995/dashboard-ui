@@ -8,7 +8,7 @@ import { FunctionLibrary } from '../../global/FunctionLibrary';
   shadow: true,
 })
 export class StatusPreview {
-  @Prop() status: ApplicationStatus[];
+  @Prop() status: ApplicationStatus[] = [];
 
   render() {
     return (
@@ -23,9 +23,9 @@ export class StatusPreview {
             return (
               <tr class="row">
                 {/* Get Enum string by using the index for the enum as array. whoy knew...  */}
-                <td class="cell">{ApplicationStatusType[status.status]}</td>
-                <td class="cell">{status.statusNameInSF}</td>
-                <td class="cell">{FunctionLibrary.dateToStringBeautiful(status.date)}</td>
+                <td class="cell">{ApplicationStatusType[status?.status]}</td>
+                <td class="cell">{status?.statusNameInSF}</td>
+                <td class="cell">{FunctionLibrary.dateToStringBeautiful(FunctionLibrary.timestampToDate(status?.date))}</td>
               </tr>
             );
           })}

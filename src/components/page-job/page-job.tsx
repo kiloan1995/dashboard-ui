@@ -5,6 +5,7 @@ import { FunctionLibrary } from '../../global/FunctionLibrary';
 import { Job } from '../../../functions/src/models/Job';
 import { Breadcrumb } from '../../global/Breadcrumb';
 import { UrlHelper } from '../../global/UrlHelper';
+import { ApplicationService } from '../../global/ApplicationService';
 
 @Component({
   tag: 'page-job',
@@ -24,6 +25,7 @@ export class PageJob {
     let params = new URLSearchParams(document.location.search);
     let jobId = params.get('jobId');
     this.breadcrumbs[1].label = 'Job ' + jobId;
+    ApplicationService.getApplicationsAtJob('test');
   }
 
   render() {

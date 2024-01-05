@@ -5,12 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { Application, ApplicationStatus } from "../functions/src/models/Application";
 import { Breadcrumb } from "./global/Breadcrumb";
 import { Job } from "../functions/src/models/Job";
-export { Application, ApplicationStatus } from "../functions/src/models/Application";
+import { ApplicationStatus } from "../functions/src/models/Application";
 export { Breadcrumb } from "./global/Breadcrumb";
 export { Job } from "../functions/src/models/Job";
+export { ApplicationStatus } from "../functions/src/models/Application";
 export namespace Components {
     interface AppRoot {
     }
@@ -37,7 +37,6 @@ export namespace Components {
         "items": any[];
     }
     interface PageApplication {
-        "application": Application;
     }
     interface PageBreadcrumbs {
         "breadcrumbs": Breadcrumb[];
@@ -211,7 +210,6 @@ declare namespace LocalJSX {
         "onItemClicked"?: (event: ListViewCustomEvent<any>) => void;
     }
     interface PageApplication {
-        "application"?: Application;
     }
     interface PageBreadcrumbs {
         "breadcrumbs"?: Breadcrumb[];

@@ -25,7 +25,7 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: ServerSettings
 
   let appList: Application[] = [];
 
-  for (let customer of customerList) {
+  for (const customer of customerList) {
     let SFService = new SuccessFactorsService(customer);
     const appResponse = await SFService.getModifiedApplications();
     let apps = (await appResponse.json()).d?.results;
@@ -81,4 +81,24 @@ export const onApplicationUpdated = onDocumentWritten({ region: ServerSettings.s
     };
   }
   // job stats updaten.
+});
+
+export const getApplication = onCall({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async request => {
+  const customerName = 'mms-staging';
+  const customerService = new CustomerService();
+  const customer = await customerService.getCustomer(customerName);
+  const dbHelper = new DatabaseService(customer);
+  let application = await dbHelper.getApplication(customerName, '10154');
+
+  return application;
+});
+
+export const getAllApplicationsAtJob = onCall({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async request => {
+  const customerName = 'mms-staging';
+  const customerService = new CustomerService();
+  const customer = await customerService.getCustomer(customerName);
+  const dbHelper = new DatabaseService(customer);
+  let applications: Application[] = await dbHelper.getAllApplicationsAtJob(customerName, '4864');
+
+  return applications;
 });

@@ -1,7 +1,8 @@
-import { Component, Host, h, State, Prop } from '@stencil/core';
+import { Component, Host, h, State } from '@stencil/core';
 import { Breadcrumb } from '../../global/Breadcrumb';
-import { Application, ApplicationStats, ApplicationStatus, ApplicationStatusType } from '../../../functions/src/models/Application';
-import { ApplicationTimeStat } from '../../../functions/src/models/Stats';
+import { Application } from '../../../functions/src/models/Application';
+import { ApplicationService } from '../../global/ApplicationService';
+
 
 @Component({
   tag: 'page-application',
@@ -9,7 +10,7 @@ import { ApplicationTimeStat } from '../../../functions/src/models/Stats';
   shadow: true,
 })
 export class PageApplication {
-  @Prop() application: Application;
+  @State() application: Application = null;
 
   @State() breadcrumbs: Breadcrumb[] = [
     { label: 'Dashboard', url: '/' },
@@ -17,22 +18,15 @@ export class PageApplication {
     { label: 'Application', url: '/job/application' },
   ];
 
-  componentWillLoad() {
+  async componentWillLoad() {
     let params = new URLSearchParams(document.location.search);
     let jobId = params.get('jobId');
     let appId = params.get('applicationId');
     this.breadcrumbs[1].label = 'Job ' + jobId;
     this.breadcrumbs[2].label = 'Application ' + appId;
 
-    let timeStats: ApplicationTimeStat = { timeFromAppliedToInterview: 10, timeInterviewToHired: 20, timeInterviewToRejected: 30 };
-    let stats: ApplicationStats = { timeStats: timeStats, hasReachedFinalStatus: false, closedDate: new Date() };
-
-    let status1: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_REJECTED, statusNameInSF: 'some status in sf' };
-    let status2: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_APPLIED, statusNameInSF: 'some status in sf2' };
-    let status3: ApplicationStatus = { date: new Date(), status: ApplicationStatusType.STATUS_HIRED, statusNameInSF: 'some status in sf3' };
-    let status: ApplicationStatus[] = [status1, status2, status3];
-
-    this.application = { candidateName: 'Kilian Glomb', id: '16843', jobId: '68765', jobTitle: 'Store Tech Employee', stats: stats, statusArr: status };
+    this.application = await ApplicationService.getApplication('No working yet');
+    console.log('kjhbsdfkjh<bsdf', this.application);
   }
 
   render() {
@@ -57,4 +51,6 @@ export class PageApplication {
       </Host>
     );
   }
+
+
 }

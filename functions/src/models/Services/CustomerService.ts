@@ -17,7 +17,8 @@ export class CustomerService {
   }
 
   async getCustomer(customerName: string): Promise<Customer> {
-    const document = await admin.firestore().doc(customerName).get();
+    const document = await admin.firestore().collection(`customers/`).doc(customerName).get();
+    // const document = await admin.firestore().doc(customerName).get();
     return document.data() as Customer;
   }
 }

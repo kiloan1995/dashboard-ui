@@ -29,7 +29,19 @@ export class DatabaseService {
     }
     return appList;
   }
+  async getApplication(customerName: string, applicationId: string): Promise<Application | undefined> {
+    let result = await admin.firestore().collection(`customers/${customerName}/applications/`).where('id', '==', applicationId).get();
 
+    for (const document of result.docs) {
+      const item: Application = {
+        ...(document.data() as Application),
+        id: document.id, // id is not returned....
+      };
+      return item;
+    }
+    return undefined;
+  }
+  
   async getJob(customerName: string, jobId: string): Promise<Job | undefined> {
     let result = await admin.firestore().collection(`customers/${customerName}/jobs/`).where('jobId', '==', jobId).get();
 
