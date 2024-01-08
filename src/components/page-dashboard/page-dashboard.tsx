@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, State } from '@stencil/core';
 import { Job } from '../../../functions/src/models/Job';
 import { Breadcrumb } from '../../global/Breadcrumb';
 import { UrlHelper } from '../../global/UrlHelper';
@@ -10,7 +10,7 @@ import { JobService } from '../../global/JobService';
   shadow: true,
 })
 export class PageDashboard {
-  @Prop() jobs: Job[] = [];
+  @State() jobs: Job[] = [];
 
   async componentWillLoad() {
     UrlHelper.removeUrlParam('applicationId');
@@ -31,7 +31,9 @@ export class PageDashboard {
             <chart-index />
           </div>
           <list-view
-            items={this.jobs}
+            items={this.jobs?.sort((a, b) => {
+              return parseInt(a.jobId) < parseInt(b.jobId) ? -1 : 1;
+            })}
             fillTablePredicate={this.getJobData}
             columnNames={['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected', 'Applicationcount']}
             onItemClicked={event => this.onListItemClicked(event)}

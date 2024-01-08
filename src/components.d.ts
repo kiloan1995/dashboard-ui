@@ -6,10 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { Breadcrumb } from "./global/Breadcrumb";
-import { Job } from "../functions/src/models/Job";
 import { ApplicationStatus } from "../functions/src/models/Application";
 export { Breadcrumb } from "./global/Breadcrumb";
-export { Job } from "../functions/src/models/Job";
 export { ApplicationStatus } from "../functions/src/models/Application";
 export namespace Components {
     interface AppRoot {
@@ -41,7 +39,6 @@ export namespace Components {
         "breadcrumbs": Breadcrumb[];
     }
     interface PageDashboard {
-        "jobs": Job[];
     }
     interface PageFooter {
     }
@@ -224,7 +221,6 @@ declare namespace LocalJSX {
         "breadcrumbs"?: Breadcrumb[];
     }
     interface PageDashboard {
-        "jobs"?: Job[];
     }
     interface PageFooter {
     }

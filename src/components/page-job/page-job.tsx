@@ -34,7 +34,9 @@ export class PageJob {
         <div class="page-container">
           <summary-view color="green" />
           <list-view
-            items={this.applications}
+            items={this.applications?.sort((a, b) => {
+              return parseInt(a.id) < parseInt(b.id) ? -1 : 1;
+            })}
             heading={this.applications?.[0]?.jobTitle + ' (jobID= ' + this.applications?.[0]?.jobId + ')'}
             fillTablePredicate={this.getApplicationData}
             columnNames={['Id', 'Candidate Name', 'Time till interview', 'Time till hired', 'Time till rejected', 'Has reached final status?', 'Statuscount', 'Closed Date']}
