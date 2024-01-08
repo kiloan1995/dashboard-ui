@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 import { Job } from '../Job';
 import { mapStatus } from '../StatusMapping';
 import { DateHelper } from '../DateHelper';
+import { StatMgr } from '../StatMgr';
 
 export class DatabaseService {
   constructor(private customer: Customer) {}
@@ -62,5 +63,42 @@ export class DatabaseService {
       list.push({ statusNameInSF: sfStateName, status: mapStatus(sfStateName), date: DateHelper.sfStringToDate(result.createdDateTime) });
     });
     return list;
+  }
+
+  async calculateAllJobsExpensive(customerName: string): Promise<Job[]> {
+    let result = await admin.firestore().collection(`customers/${customerName}/applications/`).get();
+
+    let jobList: Job[] = [];
+
+    for (const document of result.docs) {
+      const app: Application = {
+        ...(document.data() as Application),
+        id: document.id, // id is not returned....
+      };
+      let job: Job | undefined = jobList.find(job => job.jobId == app.jobId);
+      let closedDate = Application.findClosedDate(app);
+      if (!job) {
+        job = {
+          jobId: app.jobId,
+          applicationIds: [app.id],
+          jobTitle: app.jobTitle,
+          templateName: '',
+          timeStats: app.stats.timeStats,
+          lastClosedApplicationDate: closedDate,
+          timePostingDateTillFirstApplication: -1,
+        };
+        jobList.push(job);
+      } else {
+        job.applicationIds.push(app.id);
+        job.timeStats = StatMgr.calcAverage(job.timeStats, app.stats.timeStats);
+        if (closedDate && job.lastClosedApplicationDate) {
+          if (closedDate > job.lastClosedApplicationDate) {
+            job.lastClosedApplicationDate = closedDate;
+          }
+        }
+      }
+    }
+
+    return jobList;
   }
 }

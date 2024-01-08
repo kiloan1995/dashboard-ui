@@ -2,7 +2,7 @@ import { onCall, onRequest } from 'firebase-functions/v2/https';
 import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import * as admin from 'firebase-admin';
 import { CustomerService } from './models/Services/CustomerService';
-import { Application, ApplicationStats, SuccessFactorsService, DatabaseService } from './models';
+import { Application, ApplicationStats, SuccessFactorsService, DatabaseService, Job } from './models';
 import { StatMgr } from './models/StatMgr';
 import { Customer } from './models/Customer';
 import { ApplicationTimeStat } from './models/Stats';
@@ -50,6 +50,17 @@ export const onWorkerInit = onCall({ timeoutSeconds: 300, region: ServerSettings
   }
   return appList;
 });
+
+// export const onJobInit = onCall({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async request => {
+//   let service = new CustomerService();
+//   let customerList = await service.getCustomerList();
+
+//   let jobList: Job[] = [];
+//   for (const customer of customerList) {
+//     let SFService = new SuccessFactorsService(customer);
+
+//   }
+// });
 
 export const onApplicationUpdated = onDocumentWritten({ region: ServerSettings.serverRegion, document: 'customers/{customer}/applications/{appId}' }, async request => {
   let app: Application = request?.data?.after.data() as Application;
@@ -99,4 +110,13 @@ export const getAllApplicationsAtJob = onRequest({ timeoutSeconds: 300, region: 
   const dbHelper = new DatabaseService(customer);
   let applications: Application[] = await dbHelper.getAllApplicationsAtJob(customerName, request.body?.jobId);
   response.json({ applications });
+});
+
+export const getAllJobs = onRequest({ timeoutSeconds: 300, region: ServerSettings.serverRegion }, async (request, response) => {
+  const customerName = 'mms-staging';
+  const customerService = new CustomerService();
+  const customer = await customerService.getCustomer(customerName);
+  const dbHelper = new DatabaseService(customer);
+  let jobs: Job[] = await dbHelper.calculateAllJobsExpensive(customerName);
+  response.json({ jobs });
 });

@@ -41,6 +41,7 @@ export namespace Components {
         "breadcrumbs": Breadcrumb[];
     }
     interface PageDashboard {
+        "jobs": Job[];
     }
     interface PageFooter {
     }
@@ -49,7 +50,6 @@ export namespace Components {
         "hideDatePicker": boolean;
     }
     interface PageJob {
-        "job": Job;
     }
     interface PreviewTile {
         "bIsAverage": boolean;
@@ -61,6 +61,7 @@ export namespace Components {
     }
     interface SummaryView {
         "color": string;
+        "stats": { title: string; small: string; bIsAverage: boolean }[];
     }
 }
 export interface FilterPickerCustomEvent<T> extends CustomEvent<T> {
@@ -223,6 +224,7 @@ declare namespace LocalJSX {
         "breadcrumbs"?: Breadcrumb[];
     }
     interface PageDashboard {
+        "jobs"?: Job[];
     }
     interface PageFooter {
     }
@@ -233,7 +235,6 @@ declare namespace LocalJSX {
         "onStartDateChanged"?: (event: PageHeaderCustomEvent<Date>) => void;
     }
     interface PageJob {
-        "job"?: Job;
     }
     interface PreviewTile {
         "bIsAverage"?: boolean;
@@ -245,6 +246,7 @@ declare namespace LocalJSX {
     }
     interface SummaryView {
         "color"?: string;
+        "stats"?: { title: string; small: string; bIsAverage: boolean }[];
     }
     interface IntrinsicElements {
         "app-root": AppRoot;

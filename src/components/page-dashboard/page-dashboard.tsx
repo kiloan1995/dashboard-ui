@@ -1,8 +1,8 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop } from '@stencil/core';
 import { Job } from '../../../functions/src/models/Job';
-import { ApplicationTimeStat } from '../../../functions/src/models/Stats';
 import { Breadcrumb } from '../../global/Breadcrumb';
 import { UrlHelper } from '../../global/UrlHelper';
+import { JobService } from '../../global/JobService';
 
 @Component({
   tag: 'page-dashboard',
@@ -10,37 +10,16 @@ import { UrlHelper } from '../../global/UrlHelper';
   shadow: true,
 })
 export class PageDashboard {
-  componentWillLoad() {
+  @Prop() jobs: Job[] = [];
+
+  async componentWillLoad() {
     UrlHelper.removeUrlParam('applicationId');
     UrlHelper.removeUrlParam('jobId');
+
+    this.jobs = await JobService.getJobs(null, null);
   }
 
   render() {
-    let stats: ApplicationTimeStat = { timeFromAppliedToInterview: 10, timeInterviewToHired: 20, timeInterviewToRejected: 30 };
-    let job1: Job = {
-      jobId: '5157',
-      jobTitle: 'tech employee',
-      timeStats: stats,
-      templateName: '',
-      applicationIds: [],
-    };
-    let job2: Job = {
-      jobId: '5154',
-      jobTitle: 'store manager employee',
-      timeStats: stats,
-      templateName: '',
-      applicationIds: [],
-    };
-    let job3: Job = {
-      jobId: '5145',
-      jobTitle: 'informatiker',
-      timeStats: stats,
-      templateName: '',
-      applicationIds: [],
-    };
-
-    let jobs: Job[] = [job1, job2, job3];
-
     let breadcrumbs: Breadcrumb[] = [{ label: 'Dashboard', url: '/' }];
     return (
       <Host>
@@ -52,9 +31,9 @@ export class PageDashboard {
             <chart-index />
           </div>
           <list-view
-            items={jobs}
+            items={this.jobs}
             fillTablePredicate={this.getJobData}
-            columnNames={['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected']}
+            columnNames={['Id', 'Title', 'Ø Time till interview', 'Ø Time till hired', 'Ø Time till rejected', 'Applicationcount']}
             onItemClicked={event => this.onListItemClicked(event)}
           />
         </div>
@@ -72,6 +51,7 @@ export class PageDashboard {
         job.timeStats.timeFromAppliedToInterview.toString(),
         job.timeStats.timeInterviewToHired.toString(),
         job.timeStats.timeInterviewToRejected.toString(),
+        job.applicationIds.length.toString(),
       ];
     }
     return [];

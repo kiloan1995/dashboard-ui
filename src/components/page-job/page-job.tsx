@@ -1,8 +1,6 @@
-import { Component, Host, h, Prop, State } from '@stencil/core';
+import { Component, Host, h, State } from '@stencil/core';
 import { Application } from '../../../functions/src/models/Application';
-
 import { FunctionLibrary } from '../../global/FunctionLibrary';
-import { Job } from '../../../functions/src/models/Job';
 import { Breadcrumb } from '../../global/Breadcrumb';
 import { UrlHelper } from '../../global/UrlHelper';
 import { ApplicationService } from '../../global/ApplicationService';
@@ -13,7 +11,6 @@ import { ApplicationService } from '../../global/ApplicationService';
   shadow: true,
 })
 export class PageJob {
-  @Prop() job: Job;
   @State() applications: Application[];
 
   @State() breadcrumbs: Breadcrumb[] = [
@@ -26,9 +23,7 @@ export class PageJob {
 
   async componentWillLoad() {
     UrlHelper.removeUrlParam('applicationId');
-    let params = new URLSearchParams(document.location.search);
-    let jobId = params.get('jobId');
-    this.breadcrumbs[1].label = 'Job ' + jobId;
+    this.breadcrumbs[1].label = 'Job ' + UrlHelper.getUrlParam('jobId');
     this.kickOffSearch(null);
   }
 
@@ -59,8 +54,7 @@ export class PageJob {
     let startDate: Date = FunctionLibrary.customDateToDate(UrlHelper.getUrlParam('startDate'));
     let endDate: Date = FunctionLibrary.customDateToDate(UrlHelper.getUrlParam('endDate'));
     console.log('check dates', startDate, endDate);
-    this.applications = await ApplicationService.getApplicationsAtJob('4864', startDate, endDate);
-    // this.applications = { ...this.applications };
+    this.applications = await ApplicationService.getApplicationsAtJob(UrlHelper.getUrlParam('jobId'), startDate, endDate);
   }
 
   getApplicationData(item: any): string[] {

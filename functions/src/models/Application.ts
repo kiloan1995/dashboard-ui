@@ -16,6 +16,12 @@ export namespace Application {
     }
     return undefined;
   }
+  // export function findDate(app: Application, statusType: ApplicationStatusType): Date | undefined {
+  //   for (let status of app.statusArr) {
+  //     if (status.status == statusType) return status.date;
+  //   }
+  //   return undefined;
+  // }
 }
 
 export enum ApplicationStatusType {
